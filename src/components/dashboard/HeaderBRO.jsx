@@ -1,17 +1,17 @@
 import React from 'react'
 
-// Barre capsule B.R.O — fidèle au design Figma
-// Layout: B.R.O ●——————► [ BOT DE RENSEIGNEMENTS ET D'ORIENTATION ] ●—— ○○
+// Barre capsule B.O.B — fidèle au design Figma
+// Layout: B.O.B ●——————► [ BOÎTE À OUTILS ET DE BASES ] ●—— ○○
 export default function HeaderBRO() {
   return (
     <div className="bro-capsule stagger-2">
-      <span className="bro-capsule__title">B.R.O</span>
+      <span className="bro-capsule__title">B.O.B</span>
       <span className="bro-capsule__line">
         <span className="bro-capsule__dot-sm" />
         <span className="bro-capsule__rule" />
         <span className="bro-capsule__arrow">▶</span>
       </span>
-      <span className="bro-capsule__label">[ Bot de Renseignements et d'Orientation ]</span>
+      <span className="bro-capsule__label">[ Boîte à Outils et de Bases ]</span>
       <span className="bro-capsule__line bro-capsule__line--short">
         <span className="bro-capsule__dot-sm" />
         <span className="bro-capsule__rule" />

@@ -1,54 +1,129 @@
 import React, { useState } from 'react'
 
 /**
- * Données extraites du PDF : Horaire - A2025.pdf
- * Programme 61508 — Design Graphique — La Cité
- * Source : PDF fourni par le coordonnateur
- * TODO: Connecter à Supabase pour lecture dynamique du PDF
+ * Déroulement du cours 032046 — Productivité et IAG
+ * Programme Design Graphique — La Cité Collégiale
+ * 3 Unités d'apprentissage · 14 modules
+ * Source : Plan de cours V01 — 23 avril 2026
  */
-const HORAIRE_DATA = {
-  'Étape 1': [
-    { nom: 'Dessin', code: '024642 ART', detail: 'Lun 9h-12h | D2050', prof: 'Corinne Blouin-Hudon' },
-    { nom: 'Fond. du design graphique', code: '024654 DSN', detail: 'Mar 9h-12h | D2050', prof: 'Nadine Bariteau' },
-    { nom: 'Créativité exploratoire', code: '023759 MDI', detail: 'Mar 13h-16h | D2050', prof: 'Nadine Bariteau' },
-    { nom: 'Technique de prépresse', code: '024643 DSN', detail: 'Mer 16h-19h | D2050', prof: 'Élodie Nonnon' },
-    { nom: 'Bases de la typographie', code: '024659 DSN', detail: 'Jeu 13h-16h | D2050', prof: 'Miguel Boisvenue' },
-    { nom: 'Principe de mise en page', code: '024668 DSN', detail: 'Jeu 17h-20h | D2050', prof: 'Sara Drouin' },
-    { nom: 'Français écrit', code: 'FRA', detail: 'Ven 9h-12h | Comodal', prof: '' },
-  ],
-  'Étape 3': [
-    { nom: 'Illustration', code: '024666 ART', detail: 'Lun 13h-16h | D2050', prof: 'Corinne Blouin-Hudon' },
-    { nom: 'Production imprimée', code: '024646 ART', detail: 'Mar 16h-19h | D2060', prof: 'Mathieu Desjardins' },
-    { nom: 'Image de marque', code: '024661 MDI', detail: 'Mer 9h-12h | D2050', prof: 'Nicolas Beland Latreille' },
-    { nom: 'Design adaptatif', code: '024658 TEC', detail: 'Mer 13h-16h | D2050', prof: 'Nicolas Beland Latreille' },
-    { nom: 'Typographie exploratoire', code: '024651 ART', detail: 'Jeu 9h-12h | D2050', prof: 'Miguel Boisvenue' },
-    { nom: 'Animation graphique', code: '024645 ART', detail: 'Jeu 13h-16h | En ligne', prof: 'Antonio' },
-    { nom: 'English', code: 'ENL', detail: 'Ven 9h-12h | Comodal', prof: '' },
-  ],
-  'Étape 5': [
-    { nom: 'Production numérique', code: '024663 TEC', detail: 'Lun 9h-12h | D2060', prof: 'Nicolas B-Latreille' },
-    { nom: 'Signes et symboles', code: '024664 DSN', detail: 'Lun 13h-16h | D2060', prof: 'Stephanie Hubell-Lacroix' },
-    { nom: 'Portfolio S.010', code: '024669 ART', detail: 'Mar 9h-12h | En ligne', prof: 'Antonio' },
-    { nom: 'Affiches', code: '024656 ART', detail: 'Mer 9h-12h | D2060', prof: 'Vanessa Delaveau' },
-    { nom: 'Portfolio numérique et autopromotion', code: '024674 ART', detail: 'Mer 13h-16h | En ligne', prof: 'Antonio' },
-    { nom: "Production d'impression numérique", code: '024648 ART', detail: 'Jeu 9h-12h | D2060', prof: 'Patrick Ranger' },
-    { nom: 'Préparation au monde du travail', code: '024655 ADM', detail: 'Jeu 13h-16h | D2060', prof: 'Patrick Ranger' },
-  ],
+const UA_DATA = {
+  'UA1': {
+    titre: 'Pratiques éthiques & prompt',
+    modules: [
+      {
+        nom: 'Module 1',
+        code: 'INTRO',
+        detail: "Introduction à l'IAG pour un graphiste",
+        concepts: "Panorama LLM · Contexte industrie · Biais",
+      },
+      {
+        nom: 'Module 2',
+        code: 'ÉTHIQUE',
+        detail: 'Éthique et propriété intellectuelle',
+        concepts: "Droit d'auteur · Biais · Code RGD",
+      },
+      {
+        nom: 'Module 3',
+        code: 'A.C.T.I.F.',
+        detail: 'Fondements du prompt design',
+        concepts: "A.C.T.I.F. · S.I.F.T. · Atelier HTML",
+      },
+      {
+        nom: 'Module 4',
+        code: 'AVANCÉ',
+        detail: 'Notions avancées en prompt',
+        concepts: "Style · Esthétique · Références visuelles",
+      },
+    ],
+    evaluation: '↪ Éval. : Série publications — 10 enjeux éthiques de l'IAG',
+  },
+  'UA2': {
+    titre: 'Productivité augmentée',
+    modules: [
+      {
+        nom: 'Module 5',
+        code: 'I.D.É.E.',
+        detail: "Optimiser la gestion de projet avec l'IA",
+        concepts: "I.D.É.E. · Flux de travail · Brief client",
+      },
+      {
+        nom: 'Module 6',
+        code: 'IMAGE',
+        detail: "Génération et édition d'image IA-assistée",
+        concepts: "Character Consistency · Style Transfer",
+      },
+      {
+        nom: 'Module 7',
+        code: 'MISE EN PAGE',
+        detail: 'Mise en page IA-assistée',
+        concepts: "Scripts typo · Déclinaisons · Formats",
+      },
+      {
+        nom: 'Module 8',
+        code: 'MOTION',
+        detail: 'Illustration et image en mouvement IA-assistée',
+        concepts: "Scripts · Expressions After Effects",
+      },
+      {
+        nom: 'Module 9',
+        code: 'VALIDATION',
+        detail: "L'IA comme coéquipier de production",
+        concepts: "Cohérence visuelle · Critiques croisées",
+      },
+    ],
+    evaluation: '↪ Éval. : Supports visuels lancement produit — démarche I.D.É.E.',
+  },
+  'UA3': {
+    titre: 'Créativité & co-création',
+    modules: [
+      {
+        nom: 'Module 10',
+        code: 'IDÉATION',
+        detail: 'Idéation et décodage du mandat hybride',
+        concepts: "Brainstorming LLM · Esquisse manuelle d'abord",
+      },
+      {
+        nom: 'Module 11',
+        code: 'EXPLORAT.',
+        detail: 'Développement et exploration générative',
+        concepts: "3 directions visuelles · Direction artistique",
+      },
+      {
+        nom: 'Module 12',
+        code: 'CRITIQUE',
+        detail: 'Évaluation critique et intention conceptuelle',
+        concepts: "Hiérarchie · Accessibilité · Public cible",
+      },
+      {
+        nom: 'Module 13',
+        code: 'RÉSOLUTION',
+        detail: 'Résolution créative par l'IAG',
+        concepts: "Déblocage · Itération rapide · Design System",
+      },
+      {
+        nom: 'Module 14',
+        code: 'PITCH',
+        detail: "L'intention de design hybride",
+        concepts: "Pitch final · Défense des choix · Intégrité",
+      },
+    ],
+    evaluation: '↪ Éval. : Prototype fonctionnel — outil répondant à une problématique réelle',
+  },
 }
 
-const TABS = Object.keys(HORAIRE_DATA)
+const TABS = Object.keys(UA_DATA)
 
 export default function HoraireWidget() {
   const [activeTab, setActiveTab] = useState(TABS[0])
+  const ua = UA_DATA[activeTab]
 
   return (
     <div className="horaire glass stagger-5">
       <div className="horaire__header">
-        <div className="horaire__title">Horaire</div>
-        {/* Ornement remplissant l'espace horizontal à droite du titre */}
+        <div className="horaire__title">Déroulement du cours</div>
+        {/* Ornement ligne avec points pulsants */}
         <svg className="horaire__line-ornament" width="100%" height="20" viewBox="0 0 300 20" preserveAspectRatio="none" fill="none">
           <line x1="0" y1="10" x2="300" y2="10" stroke="rgba(255,255,255,0.15)" strokeWidth="1.2"/>
-          {/* Cercles avec pulsation séquentielle gauche → droite */}
           <circle className="horaire-dot" cx="20"  cy="10" r="3" style={{ animationDelay: '0s' }}/>
           <circle className="horaire-dot" cx="80"  cy="10" r="3" style={{ animationDelay: '1s' }}/>
           <circle className="horaire-dot" cx="140" cy="10" r="3" style={{ animationDelay: '2s' }}/>
@@ -70,20 +145,34 @@ export default function HoraireWidget() {
         ))}
       </div>
 
+      {/* Sous-titre de l'UA */}
+      <div style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.08em', opacity: 0.5, padding: '2px 0 6px 0' }}>
+        {ua.titre}
+      </div>
+
       <div className="horaire__courses">
-        {HORAIRE_DATA[activeTab].map((course, i) => (
+        {ua.modules.map((mod, i) => (
           <div className="horaire__course" key={i}>
-            <div className="horaire__course-name">{course.nom}</div>
+            <div className="horaire__course-name">
+              {mod.nom} <span style={{ opacity: 0.45, fontSize: '0.7em', fontWeight: 400 }}>— {mod.code}</span>
+            </div>
             <div className="horaire__course-detail">
-              {course.detail}
-              {course.prof && ` — ${course.prof}`}
+              {mod.detail}
+              {mod.concepts && ` · ${mod.concepts}`}
             </div>
           </div>
         ))}
+
+        {/* Badge évaluation sommative */}
+        <div className="horaire__course" style={{ marginTop: '6px', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '8px' }}>
+          <div className="horaire__course-detail" style={{ opacity: 0.7, fontStyle: 'italic' }}>
+            {ua.evaluation}
+          </div>
+        </div>
       </div>
 
       <div className="horaire__disclaimer">
-        Sujet à changement — validez sur votre portail eCité.
+        Plan de cours provisoire — confirmez les détails avec M. Hilario.
       </div>
     </div>
   )

@@ -2,7 +2,8 @@
 // Proxy RSS — récupère 1 article récent par source design
 // Mis en cache 1h côté Vercel (s-maxage=3600) pour ne pas surcharger les sources
 
-// ─── Sources RSS ──────────────────────────────────────────────────────────
+// ─── Sources RSS — IA générative en design graphique ─────────────────────
+// Axé sur : design graphique, design web, motion design, imprimé + IA générative
 // Ordre : FR en premier, EN ensuite. On prend 1 article par source.
 // Les 4 premières qui répondent = les 4 cartes affichées.
 // Les sources suivantes servent de secours si une des 4 premières est hors ligne.
@@ -11,34 +12,35 @@ const RSS_FEEDS = [
   {
     label: 'Créapills',
     url: 'https://www.creapills.com/feed/',
-    fallbackImage: 'https://images.unsplash.com/photo-1636622433525-127afdf3662d?w=600&q=80',
+    fallbackImage: 'https://images.unsplash.com/photo-1686191128892-3b37add4c844?w=600&q=80',
   },
   {
     label: 'Graphéine',
     url: 'https://www.grapheine.com/feed/',
-    fallbackImage: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80',
+    fallbackImage: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80',
   },
+  // ── Anglais — motion design & animation IA ──
   {
-    label: 'Étapes',
-    url: 'https://etapes.com/feed/',
-    fallbackImage: 'https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=600&q=80',
+    label: 'Motionographer',
+    url: 'https://motionographer.com/feed/',
+    fallbackImage: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80',
   },
-  // ── Anglais ──
+  // ── Anglais — outils IA pour designers ──
   {
-    label: "It's Nice That",
-    url: 'https://www.itsnicethat.com/rss',
-    fallbackImage: 'https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=600&q=80',
-  },
-  {
-    label: 'Brand New',
-    url: 'https://www.underconsideration.com/brandnew/archives/rss.xml',
-    fallbackImage: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',
+    label: 'Creative Bloq',
+    url: 'https://feeds.feedburner.com/creativebloq/rss',
+    fallbackImage: 'https://images.unsplash.com/photo-1558618047-f5e85e2d3e93?w=600&q=80',
   },
   // ── Secours (utilisés seulement si une source ci-dessus ne répond pas) ──
   {
     label: 'Eye on Design',
     url: 'https://eyeondesign.aiga.org/feed/',
-    fallbackImage: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',
+    fallbackImage: 'https://images.unsplash.com/photo-1636622433525-127afdf3662d?w=600&q=80',
+  },
+  {
+    label: 'Smashing Magazine',
+    url: 'https://www.smashingmagazine.com/feed/',
+    fallbackImage: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80',
   },
   {
     label: 'Dezeen',
@@ -119,7 +121,7 @@ export default async function handler(req, res) {
     try {
       const response = await fetch(source.url, {
         headers: {
-          'User-Agent': 'Mozilla/5.0 (compatible; BRO-Dashboard/1.0; Design Graphique La Cite)',
+          'User-Agent': 'Mozilla/5.0 (compatible; BOB-Dashboard/1.0; IAG 032046 La Cite)',
           'Accept': 'application/rss+xml, application/xml, text/xml',
         },
         signal: AbortSignal.timeout(6000), // abandon après 6s

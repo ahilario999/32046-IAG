@@ -82,15 +82,15 @@ export default function App() {
             </div>
             <div className="session-main__sep" />
             <div className="session-main__right">
-              <span>cours</span>
-              <span>info</span>
-              <span>chat</span>
+              <span>outils</span>
+              <span>éthique</span>
+              <span>créa</span>
             </div>
           </div>
 
-          {/* Bas : programme + mode */}
+          {/* Bas : programme + cours */}
           <div className="session-footer">
-            Design Graphique &nbsp;// &nbsp;Mode Coop
+            Design Graphique &nbsp;// &nbsp;IAG 032046
           </div>
         </div>
 

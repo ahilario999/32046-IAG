@@ -4,27 +4,27 @@ import React, { useEffect, useState } from 'react'
 const FALLBACK_DATA = [
   {
     id: 1,
-    image: 'https://images.unsplash.com/photo-1636622433525-127afdf3662d?w=600&q=80',
-    title: 'Identités visuelles qui marquent',
-    link: 'https://www.itsnicethat.com/categories/graphic-design',
+    image: 'https://images.unsplash.com/photo-1686191128892-3b37add4c844?w=600&q=80',
+    title: 'IA générative et identités visuelles',
+    link: 'https://www.creapills.com/',
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80',
-    title: 'Typographie : les tendances',
-    link: 'https://www.itsnicethat.com/categories/graphic-design',
+    image: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80',
+    title: 'Prompt design : vers une nouvelle esthétique',
+    link: 'https://www.grapheine.com/',
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=600&q=80',
-    title: 'Packaging design primé 2026',
-    link: 'https://www.underconsideration.com/brandnew/',
+    image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80',
+    title: 'Motion design et animation IA',
+    link: 'https://motionographer.com/',
   },
   {
     id: 4,
-    image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',
-    title: 'Motion & design interactif',
-    link: 'https://eyeondesign.aiga.org/',
+    image: 'https://images.unsplash.com/photo-1558618047-f5e85e2d3e93?w=600&q=80',
+    title: 'Les meilleurs outils IA pour designers',
+    link: 'https://www.creativebloq.com/',
   },
 ]
 
@@ -54,7 +54,7 @@ export default function DesignVeilleWidget() {
 
       {/* En-tête — titre + trio à droite */}
       <div className="design-veille__header">
-        <div className="design-veille__title">Veille Design</div>
+        <div className="design-veille__title">Veille IA Générative</div>
 
         {/* Trio d'ornements — 3 losanges variés côte à côte */}
         <div className="widget-ornament-trio">
