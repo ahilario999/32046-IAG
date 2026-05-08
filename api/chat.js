@@ -216,103 +216,19 @@ F — Fiches personas sous forme de tableaux avec champs prédéfinis
 Ce modèle 4 étapes est transférable à n'importe quelle activité d'analyse avec l'IA : toujours commencer par ingérer les données (étape 1), analyser ensuite (étape 2), segmenter (étape 3), puis produire les livrables finaux (étape 4).
 
 ─────────────────────────────────────────────────────────────
-CADRE CONCEPTUEL — LE GRAPHISTE DANS LA BOUCLE (Fév. 2026)
+CONNAISSANCES DE RÉFÉRENCE — IAG ET DESIGN GRAPHIQUE
 ─────────────────────────────────────────────────────────────
-Le graphiste reste toujours dans la boucle selon le cadre PENSE•CONÇOIT•JUGE•CRÉE : l'IA génère, le designer crée. La proportion de travail dans un projet hybride se répartit approximativement à 40% IA / 60% designer, mais cette proportion varie selon le projet.
+CADRE CONCEPTUEL (Fév. 2026) : Le graphiste reste dans la boucle — PENSE•CONÇOIT•JUGE•CRÉE. Ratio 40% IA / 60% designer. Évolution des outils : Génération 1 traditionnel (carnet, crayon), Génération 2 numérique (Adobe, Affinity), Génération 3 collaboratif (Figma, Milanote), Génération 4 génératif (Claude, Firefly, Gemini, Midjourney). L'IA génère des variantes et automatise les tâches répétitives — le designer juge, décide et signe.
 
-Évolution des outils du designer (4 générations) :
-Génération 1 — Traditionnel : Carnet, crayon, règle, papier calque
-Génération 2 — Numérique : Adobe CC, Affinity, Canva
-Génération 3 — Collaboratif : Milanote, Figma, Miro, Notion
-Génération 4 — Génératif : Gemini, Firefly, Claude, Perplexity, Midjourney
+10 ENJEUX ÉTHIQUES DE L'IAG (liste du cours) : droit d'auteur, transparence/déclaration, biais algorithmiques, dévaluation des artistes, impact environnemental, conditions des annotateurs, désinformation/deepfakes, homogénéisation visuelle, accès équitable, responsabilité professionnelle.
 
-L'IA réalise les tâches répétitives, les variations, la recherche rapide et la génération de brouillons. Le designer conserve le jugement esthétique, l'intention conceptuelle, la relation client et la responsabilité éthique. Tableau « Qui fait quoi » : l'IA génère des variantes, propose des structures, synthétise des références, automatise des scripts — le designer valide, oriente, décide et signe.
+CODE RGD SUR L'IA : Règle 3.1.9 — transparence obligatoire sur l'utilisation de l'IA dans sa pratique. Règle 3.2.4 — établir une déclaration ou politique IA. Ces règles s'appliquent aux travaux professionnels et scolaires de simulation.
 
-Les 10 enjeux éthiques de l'IAG en design graphique (liste fournie par M. Hilario dans le cours) :
-1. Droit d'auteur et propriété intellectuelle
-2. Transparence et déclaration d'utilisation de l'IA
-3. Biais algorithmiques et représentation visuelle
-4. Dévaluation du travail des artistes et designers
-5. Impact environnemental (énergie, eau, serveurs)
-6. Conditions de travail des annotateurs (pays en développement)
-7. Désinformation et deepfakes visuels
-8. Homogénéisation de la culture visuelle
-9. Accès équitable aux outils IA
-10. Responsabilité professionnelle et intégrité du designer
+PROPRIÉTÉ INTELLECTUELLE ET IA : Au Canada, personne ne détient automatiquement le droit d'auteur sur une image produite exclusivement par l'IA sans intervention humaine créative suffisante. Pas de licence exclusive possible sans contribution humaine substantielle. Utilisation commerciale permise si la touche créative humaine est suffisante et documentée (ex. : collage, démarche dadaïste).
 
-─────────────────────────────────────────────────────────────
-CODE DE DÉONTOLOGIE RGD — RÈGLES SUR L'IA
-─────────────────────────────────────────────────────────────
-Le Regroupement des designers graphiques du Canada (RGD) — aussi connu sous DesignCanada — impose deux obligations clés liées à l'IA :
+L'IA NE CRÉE PAS, ELLE GÉNÈRE (Illustration Québec, oct. 2024) : Les outils courants (Midjourney, DALL-E, Stable Diffusion) s'entraînent sur des milliards d'images sans autorisation ni compensation. L'IA compile et copie — elle n'a pas de subjectivité humaine. Signaux d'une image IA : doigts/mains/yeux incohérents, texte illisible, détails qui se fondent illogiquement, flou en arrière-plan.
 
-Règle 3.1.9 : « Si j'intègre l'intelligence artificielle à ma pratique, je ferai preuve de transparence quant à son utilisation. »
-Règle 3.2.4 : « J'établirai une déclaration ou une politique relative à l'intelligence artificielle. »
-
-Ces règles s'appliquent dans tout contexte professionnel, y compris les travaux scolaires destinés à simulation de mandat client.
-
-─────────────────────────────────────────────────────────────
-PROPRIÉTÉ INTELLECTUELLE ET IAG — QUESTIONS FRÉQUENTES
-─────────────────────────────────────────────────────────────
-Qui détient les droits sur une image générée par l'IA ?
-Au Canada, personne ne détient automatiquement le droit d'auteur sur une image produite exclusivement par l'IA sans intervention humaine créative suffisante. La Loi sur le droit d'auteur exige que l'œuvre soit originale et reflète le talent, le jugement et l'effort de l'auteur humain.
-
-Peut-on obtenir une licence exclusive sur une image IA ?
-Non. Si l'image est générée sans contribution créative humaine substantielle, elle ne peut pas faire l'objet d'une licence exclusive.
-
-Peut-on utiliser commercialement du contenu généré par l'IA ?
-Oui, à condition que la contribution créative humaine soit suffisante (ex. : collage, retouche importante, démarche dadaïste). Plus l'intervention humaine est creative et documentée, plus la protection est solide.
-
-─────────────────────────────────────────────────────────────
-ILLUSTRATION QUÉBEC — L'IA ET LA PROFESSION D'ILLUSTRATEUR
-─────────────────────────────────────────────────────────────
-L'IA générative ne crée pas d'images, elle les génère. Elle synthétise des styles, des compositions et des éléments graphiques à partir de milliards d'images prélevées sans autorisation, sans crédit et sans compensation. C'est la position officielle d'Illustration Québec (guide, oct. 2024).
-
-IA générative éthique vs non éthique : la plupart des outils courants (Midjourney, DALL-E, Stable Diffusion) sont considérés non éthiques car ils s'appuient sur du contenu pris sans permission. Une IA éthique s'entraîne uniquement sur des œuvres consenties et rémunère les artistes.
-
-Idées reçues courantes sur l'IA et réponses :
-Idée reçue : « Les artistes s'inspirent bien d'autres artistes, pourquoi pas l'IA ? »
-Réponse : L'artiste filtre par une subjectivité humaine unique — l'IA compile et copie sans filtrer.
-
-Idée reçue : « C'est juste un outil comme les autres. »
-Réponse : L'IA peut être outil à certaines étapes, mais quand la production dépend entièrement de l'IA, c'est de l'automatisation, pas de la création. Et même partielle, son usage a des conséquences sur le droit d'auteur.
-
-Idée reçue : « L'utilisateur qui écrit le prompt est l'auteur. »
-Réponse : Les tribunaux canadiens ne se sont pas encore prononcés. Aux États-Unis, le Copyright Office a refusé la protection pour une image sans intervention humaine (2023, confirmé en appel).
-
-Signaux visuels d'une image IA : incohérences anatomiques (doigts, mains, yeux), détails qui se fondent illogiquement, texte illisible dans l'image, flou en arrière-plan.
-
-─────────────────────────────────────────────────────────────
-FIGMA — STATE OF THE DESIGNER 2026 (enquête, 906 designers)
-─────────────────────────────────────────────────────────────
-Statistiques clés à citer en classe ou dans une discussion sur l'IA :
-
-72% des designers utilisent des outils d'IA générative dans leur workflow.
-98% de ceux qui l'utilisent ont augmenté leur utilisation au cours de la dernière année.
-89% déclarent que l'IA les aide à travailler plus rapidement.
-91% déclarent que l'IA améliore la qualité de leurs productions.
-80% déclarent que l'IA améliore leur collaboration.
-57% disent que l'IA les aide à passer plus de temps sur un travail à forte valeur ajoutée.
-43% voient l'IA comme un outil utile qui ne remplacera pas les designers.
-25% expriment des inquiétudes sur l'impact de l'IA sur les emplois en design.
-Les designers qui adoptent l'IA sont 25% plus susceptibles de se déclarer plus heureux dans leur travail.
-40% des designers dont l'utilisation de l'IA stagne déclarent que leur travail se dégrade.
-
-Compétences les plus demandées selon cette étude :
-1. Design visuel (58%)
-2. Utilisation de l'IA dans le processus de design (54%)
-3. Design de produits réalisé avec l'IA (37%)
-4. Motion design / prototypage (29%)
-5. Leadership et gestion d'équipe (27%)
-
-Le savoir-faire (craft) selon les designers :
-Finition visuelle et attention aux détails (58%), résolution réfléchie de problèmes (47%), clarté UX (36%), émotion et plaisir (35%).
-
-Facteur #1 du bonheur au travail : la liberté créative. 48% la placent dans leur top 3, 29% en font leur priorité absolue. 87% disent que l'autonomie améliore leur performance.
-
-Citation clé (designer brésilien, secteur financier) : « L'IA peut être un excellent outil pour aider les designers à faire les choses mieux ou plus rapidement, et ne remplacera pas complètement la profession de designer. »
-Citation clé (designer italien freelance) : « Le savoir-faire a mûri. L'IA a automatisé beaucoup de travail de design de surface : maintenant la valeur réside dans la pensée systémique et la capacité de traduire la complexité en clarté. »
-
-Conclusion Figma 2026 : Les designers qui prospéreront sont ceux qui savent exploiter l'IA pour amplifier leur réflexion tout en protégeant le savoir-faire, le jugement et la collaboration qui définissent un design exceptionnel.
+FIGMA STATE OF DESIGNER 2026 (906 designers) : 72% utilisent l'IA générative, 98% ont augmenté leur usage en un an. Résultats : 89% travaillent plus vite, 91% meilleure qualité, 80% meilleure collaboration. 43% voient l'IA comme outil utile sans remplacement. Les designers qui adoptent l'IA sont 25% plus heureux. Compétence la plus demandée : design visuel (58%), puis utilisation de l'IA (54%). Facteur #1 du bonheur : liberté créative (48% top 3). Citation : « Le savoir-faire a mûri. L'IA automatise le design de surface — la valeur est maintenant dans la pensée systémique. »
 `;
 
 export default async function handler(req, res) {
@@ -359,7 +275,7 @@ export default async function handler(req, res) {
     ];
 
     const groqPayload = {
-      model: "llama-3.1-8b-instant",
+      model: "llama-3.3-70b-versatile",
       messages: formattedMessages,
       temperature: 0.7,
       max_tokens: 512,
