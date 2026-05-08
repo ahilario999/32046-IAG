@@ -76,18 +76,18 @@ export default function HoraireWidget() {
       </div>
 
       {/* Sous-titre de l'UA */}
-      <div style={{ fontSize: '1.3rem', textTransform: 'uppercase', letterSpacing: '0.08em', opacity: 0.45, padding: '2px 0 8px 0' }}>
+      <div style={{ fontSize: '0.87rem', textTransform: 'uppercase', letterSpacing: '0.08em', opacity: 0.45, padding: '2px 0 8px 0' }}>
         {ua.titre}
       </div>
 
       <div className="horaire__courses">
         {ua.modules.map((mod, i) => (
           <div className="horaire__course" key={i}>
-            <div className="horaire__course-name" style={{ fontSize: '1.7rem' }}>
+            <div className="horaire__course-name" style={{ fontSize: '1.14rem' }}>
               <span style={{ opacity: 0.45, fontSize: '0.8em', fontWeight: 400, marginRight: '5px' }}>{mod.nom} —</span>
               {mod.titre}
             </div>
-            <div className="horaire__course-detail" style={{ fontSize: '1.6rem', opacity: 0.6 }}>
+            <div className="horaire__course-detail" style={{ fontSize: '1.07rem', opacity: 0.6 }}>
               {mod.mots}
             </div>
           </div>
@@ -95,7 +95,7 @@ export default function HoraireWidget() {
 
         {/* Badge évaluation sommative */}
         <div className="horaire__course" style={{ marginTop: '6px', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '8px' }}>
-          <div className="horaire__course-detail" style={{ fontSize: '1.56rem', opacity: 0.7, fontStyle: 'italic' }}>
+          <div className="horaire__course-detail" style={{ fontSize: '1.05rem', opacity: 0.7, fontStyle: 'italic' }}>
             {ua.evaluation}
           </div>
         </div>
