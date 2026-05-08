@@ -1,0 +1,1867 @@
+/* ============================
+   B.R.O — Bureau de Renseignements et d'Orientation
+   Dashboard Design Graphique - La Cité
+   Grille 6 colonnes · Glassmorphism · Advent Pro
+   ============================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Advent+Pro:wght@100;200;300;400;500;600;700&family=Open+Sans:wght@400;600&display=swap');
+
+/* --- Design Tokens --- */
+:root {
+  --font-primary: 'Advent Pro', sans-serif;
+  --font-mono: 'Menlo', 'Monaco', 'Courier New', monospace;
+
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+  --color-text: #FFFFFF;
+  --color-text-muted: rgba(255, 255, 255, 0.55);
+  --color-accent-green: #17A84A;
+  --color-accent-coral: #D85A30;
+  --color-accent-red: #E24B4A;
+
+  /* Glass — ultra-transparent pour laisser le bokeh vibrant */
+  --glass-bg: rgba(12, 12, 20, 0.28);
+  --glass-bg-hover: rgba(12, 12, 20, 0.38);
+  --glass-border: rgba(255, 255, 255, 0.10);
+  --glass-blur: 24px;
+
+  --gap: 20px;
+  --padding-card: 16px;
+  --radius: 0px;
+  --radius-sm: 0px;
+  --radius-xs: 0px;
+
+  --transition-fast: 200ms ease-out;
+  --transition-normal: 350ms ease-out;
+
+  --text-xs: 0.94rem;
+  --text-sm: 1.1rem;
+  --text-base: 1rem;
+  --text-lg: 1.15rem;
+  --text-xl: 1.4rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.2rem;
+  --text-4xl: 3rem;
+  --text-hero: clamp(3rem, 5vw, 6rem);
+}
+
+/* --- Reset --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--font-primary);
+  font-weight: 400;
+  color: var(--color-text);
+  background-color: var(--color-black);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+}
+
+/* ============================================
+   CUSTOM CURSOR — Rétroaction subtile
+   ============================================ */
+.cursor-dot {
+  position: fixed;
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  transition: opacity 150ms ease-out, transform 150ms ease-out;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+}
+
+.cursor-halo {
+  position: fixed;
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: opacity 200ms ease-out, transform 200ms ease-out;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+a {
+  color: var(--color-white);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+a:hover { opacity: 0.8; }
+
+/* ============================================
+   BACKGROUND DYNAMIQUE
+   ============================================ */
+.bg-dynamic {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: #06070e; /* fallback pendant le chargement */
+  overflow: hidden;
+}
+
+/* Image de fond — légèrement surdimensionnée pour permettre le drift */
+.bg-image {
+  position: absolute;
+  inset: -6%;
+  background-size: cover;
+  background-position: center;
+  will-change: transform;
+  animation: kenBurns 50s ease-in-out infinite alternate;
+}
+
+/* Overlay sombre — lisibilité des widgets sur l'image */
+.bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 5, 12, 0.52);
+}
+
+/* Orbes très discrets — renforcent les coins sans masquer l'image */
+.bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  will-change: transform;
+  transform: translateZ(0);
+  mix-blend-mode: screen;
+}
+
+/* Bleu — coin supérieur droit */
+.bg-orb--1 {
+  width: 480px; height: 480px;
+  background: rgba(40, 100, 200, 0.18);
+  top: -10%; right: 5%;
+  opacity: 0.6;
+  animation: orbDrift1 48s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+}
+
+/* Chaud (rouge/orange) — coin inférieur gauche */
+.bg-orb--2 {
+  width: 400px; height: 400px;
+  background: rgba(200, 70, 30, 0.16);
+  bottom: -8%; left: 8%;
+  opacity: 0.55;
+  animation: orbDrift2 58s cubic-bezier(0.37, 0, 0.63, 1) infinite;
+  animation-delay: -25s;
+}
+
+/* Ken Burns — zoom + dérive très lents, GPU-only */
+@keyframes kenBurns {
+  0%   { transform: scale(1.0)  translate3d(0,      0,     0); }
+  25%  { transform: scale(1.04) translate3d(-0.8%,  0.4%,  0); }
+  50%  { transform: scale(1.06) translate3d(0.5%,  -0.6%,  0); }
+  75%  { transform: scale(1.03) translate3d(0.8%,   0.3%,  0); }
+  100% { transform: scale(1.05) translate3d(-0.4%, -0.4%,  0); }
+}
+
+/* Orbes — translate3d uniquement */
+@keyframes orbDrift1 {
+  0%   { transform: translate3d(0,     0,    0); }
+  33%  { transform: translate3d(-60px, 50px, 0); }
+  66%  { transform: translate3d(40px, -55px, 0); }
+  100% { transform: translate3d(0,     0,    0); }
+}
+
+@keyframes orbDrift2 {
+  0%   { transform: translate3d(0,    0,    0); }
+  40%  { transform: translate3d(70px, -40px, 0); }
+  80%  { transform: translate3d(-50px, 30px, 0); }
+  100% { transform: translate3d(0,    0,    0); }
+}
+
+/* ============================================
+   GRILLE DASHBOARD — 6 COLONNES
+   Ratio : 2 gauche | 2 centre (chat) | 2 droite
+   ============================================ */
+.dashboard {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: auto 1fr;
+  gap: var(--gap);
+  padding: var(--gap);
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ============================================
+   GLASS CARD BASE
+   ============================================ */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  padding: var(--padding-card);
+  transition: background var(--transition-fast);
+  overflow: hidden;
+}
+
+.glass:hover {
+  background: var(--glass-bg-hover);
+}
+
+.glass--no-hover:hover {
+  background: var(--glass-bg);
+}
+
+/* ============================================
+   ROW 1 — HEADER (4 éléments sur 6 colonnes)
+   ============================================ */
+
+/* Col 1 : Logo vert (carré) */
+.grid-logo {
+  grid-column: 1 / 2;
+  grid-row: 1;
+}
+
+.brand-logo {
+  width: 100%;
+  aspect-ratio: 1;
+  background: var(--color-accent-green);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 24px rgba(23, 168, 74, 0.25);
+}
+
+.brand-logo__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Col 2 : Info session — grille interne fidèle au Figma */
+.grid-session {
+  grid-column: 2 / 3;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 14px 16px;
+  position: relative;
+}
+
+/* --- Rangée du haut : [automne] | ✱ --- */
+.session-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.session-top__pill {
+  font-size: var(--text-sm);
+  font-weight: 400;
+  text-transform: lowercase;
+  letter-spacing: 0.04em;
+  border: 1px solid rgba(255,255,255,0.3);
+  border-radius: 20px;
+  padding: 3px 14px;
+}
+
+.session-top__sep {
+  width: 1px;
+  height: 22px;
+  background: rgba(255,255,255,0.2);
+  flex-shrink: 0;
+}
+
+.session-top__star {
+  font-size: var(--text-2xl);
+  font-weight: 200;
+  opacity: 0.7;
+  margin-left: auto;
+}
+
+/* --- Ligne horizontale séparatrice --- */
+.session-rule--h {
+  width: 100%;
+  height: 1px;
+  background: rgba(255,255,255,0.15);
+  margin: 8px 0;
+}
+
+/* --- Rangée centre : 26 | cours/info/chat --- */
+.session-main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.session-main__left {
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.session-main__number {
+  font-size: var(--text-hero);
+  font-weight: 200;
+  line-height: 0.85;
+  letter-spacing: -0.02em;
+}
+
+.session-main__dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  background: var(--color-white);
+  border-radius: 2px;
+  margin-top: 4px;
+}
+
+.session-main__sep {
+  width: 1px;
+  align-self: stretch;
+  background: rgba(255,255,255,0.15);
+  flex-shrink: 0;
+}
+
+.session-main__right {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  font-size: var(--text-sm);
+  font-weight: 400;
+  opacity: 0.65;
+  text-transform: lowercase;
+  letter-spacing: 0.03em;
+}
+
+/* --- Footer : programme + mode --- */
+.session-footer {
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.4;
+  margin-top: 6px;
+}
+
+/* Col 3-4 : Spacer (B.R.O est maintenant DANS le chat) */
+.grid-header-spacer {
+  grid-column: 3 / 5;
+  grid-row: 1;
+}
+
+/* ============================================
+   CAPSULE B.R.O — barre décorative dans le chat
+   Style: contour arrondi capsule avec ornements
+   ============================================ */
+.bro-capsule {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  margin: 10px 10px 0;
+  border: 1.5px solid rgba(255,255,255,0.25);
+  border-radius: 50px;
+  background: rgba(255,255,255,0.04);
+  flex-shrink: 0;
+}
+
+.bro-capsule__title {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.bro-capsule__line {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  min-width: 30px;
+}
+
+.bro-capsule__line--short {
+  flex: 0.4;
+}
+
+.bro-capsule__dot-sm {
+  width: 5px; height: 5px;
+  background: rgba(255,255,255,0.4);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.bro-capsule__rule {
+  flex: 1;
+  height: 2px;
+  background: rgba(255,255,255,0.25);
+}
+
+.bro-capsule__arrow {
+  font-size: 0.55rem;
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+.bro-capsule__label {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.6;
+  white-space: nowrap;
+}
+
+.bro-capsule__circles {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* Col 5-6 : Dates importantes / Calendrier */
+.header-dates {
+  grid-column: 5 / 7;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 16px;
+}
+
+/* En-tête section */
+.dates-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 2px;
+}
+
+.dates-header__label {
+  font-size: var(--text-xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.4;
+  white-space: nowrap;
+}
+
+.dates-header__rule {
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,0.12);
+}
+
+.dates-header__dot {
+  width: 4px; height: 4px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Item de date */
+.date-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.date-item__ornament {
+  flex-shrink: 0;
+  width: 36px; height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2px;
+}
+
+/* Animations ornements calendrier */
+.date-ornament--spin {
+  animation: spinSlow 50s linear infinite;
+}
+.date-ornament--pulse {
+  animation: pulseSlow 8s ease-in-out infinite;
+}
+.date-ornament--float {
+  animation: floatSubtle 12s ease-in-out infinite;
+}
+
+.date-item__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+/* Nom de l'événement — 3× plus gros, l'info importante */
+.date-item__label {
+  font-size: 1.2rem;
+  font-weight: 300;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+}
+
+.date-item__meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.date-item__date {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--color-accent-coral);
+}
+
+.date-item__rappel {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: rgba(255,255,255,0.45);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color var(--transition-fast);
+}
+
+.date-item__rappel:hover {
+  color: var(--color-accent-coral);
+}
+
+/* ============================================
+   ROW 2 — CONTENU (3 zones × 2 colonnes)
+   ============================================ */
+
+/* Cols 1-2 : Gauche */
+.grid-left {
+  grid-column: 1 / 3;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  overflow: hidden;
+}
+
+/* Cols 3-4 : Centre (Chat) — occupe les 2 rows */
+.grid-center {
+  grid-column: 3 / 5;
+  grid-row: 1 / 3;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
+  position: relative;
+  background: rgba(8, 8, 16, 0.18) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+.grid-center .chat-bg {
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius);
+  overflow: hidden;
+  z-index: 0;
+}
+
+.grid-center .chat-bg__gradient {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 50%, rgba(240,140,120,0.45) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 40%, rgba(140,180,240,0.35) 0%, transparent 45%),
+    radial-gradient(ellipse at 50% 70%, rgba(255,200,180,0.3) 0%, transparent 40%),
+    radial-gradient(ellipse at 60% 30%, rgba(200,160,220,0.25) 0%, transparent 40%),
+    linear-gradient(180deg, rgba(20,15,30,0.2) 0%, rgba(10,10,20,0.4) 100%);
+  animation: gradientShift 15s ease-in-out infinite alternate;
+}
+
+.grid-center .chat-content {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Cols 5-6 : Droite */
+.grid-right {
+  grid-column: 5 / 7;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap);
+  overflow: hidden;
+}
+
+/* ============================================
+   WIDGETS ROW (2 petits modules côte à côte)
+   ============================================ */
+.widgets-row {
+  display: flex;
+  gap: var(--gap);
+}
+
+.widgets-row > * {
+  flex: 1;
+}
+
+/* Dernière widgets-row dans grid-right (Médias + Contact) — hauteur fixe */
+.grid-right > .widgets-row:last-child {
+  flex: 0 0 220px;
+  align-items: stretch;
+}
+
+
+/* ============================================
+   HORAIRE WIDGET
+   ============================================ */
+.horaire {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.horaire__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  width: 100%;
+}
+
+.horaire__line-ornament {
+  flex: 1;
+  margin-left: 8px;
+}
+
+.horaire__ornement {
+  flex: 0 1 auto;
+  max-width: 45%;
+  opacity: 0.55;
+  display: flex;
+  align-items: center;
+}
+
+.horaire__ornement-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.horaire__header-text {
+  flex: 1;
+  text-align: right;
+}
+
+.horaire__title {
+  font-size: var(--text-3xl);
+  font-weight: 200;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+}
+
+.horaire__update {
+  font-size: var(--text-xs);
+  opacity: 0.45;
+  margin-top: 2px;
+}
+
+.horaire__tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.horaire__tab {
+  flex: 1;
+  padding: 5px 8px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: var(--radius-xs);
+  color: var(--color-white);
+  font-family: var(--font-primary);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+.horaire__tab:hover,
+.horaire__tab--active {
+  background: rgba(255,255,255,0.18);
+  border-color: rgba(255,255,255,0.25);
+}
+
+.horaire__courses {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  overflow-y: auto;
+}
+
+.horaire__course {
+  background: rgba(216, 90, 48, 0.2);
+  border: 1px solid rgba(216, 90, 48, 0.25);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  transition: all var(--transition-fast);
+}
+
+.horaire__course:hover {
+  background: rgba(216, 90, 48, 0.3);
+}
+
+.horaire__course-name {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.horaire__course-detail {
+  font-size: var(--text-xs);
+  opacity: 0.65;
+  margin-top: 2px;
+}
+
+.horaire__disclaimer {
+  font-size: var(--text-xs);
+  opacity: 0.35;
+  line-height: 1.3;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+/* ============================================
+   WIDGET CARD — système unifié pour les petits widgets
+   (Tutorat, Stage/Flex, Impression, Prêt Multimédia)
+   ============================================ */
+.widget-card {
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+.widget-card__title {
+  font-size: var(--text-3xl);
+  font-weight: 200;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+}
+
+.widget-card__title--green {
+  color: var(--color-accent-green);
+}
+
+.widget-card__body {
+  font-size: var(--text-xs);
+  line-height: 1.5;
+  opacity: 0.85;
+}
+
+.widget-card__body--italic {
+  font-style: italic;
+  opacity: 0.75;
+}
+
+.widget-card__subtitle {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  opacity: 0.55;
+  margin-bottom: 2px;
+}
+
+.widget-card__cta {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1.5;
+  opacity: 0.85;
+  color: var(--color-white);
+}
+
+/* Trio d'ornements — 3 formes côte à côte sous le titre */
+.widget-ornament-trio {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.widget-ornament-trio svg {
+  flex-shrink: 0;
+  opacity: 0.7;
+  transition: opacity 200ms ease;
+}
+
+.widget-ornament-trio svg:hover {
+  opacity: 1;
+}
+
+/* Ligne ornementale style B.R.O pour widgets */
+.widget-ornament-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 6px 0;
+  width: 100%;
+}
+
+.widget-ornament-line__dot {
+  width: 4px;
+  height: 4px;
+  background: rgba(255,255,255,0.35);
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.widget-ornament-line__rule {
+  flex: 1;
+  height: 2px;
+  background: rgba(255,255,255,0.2);
+}
+
+.widget-ornament-line__arrow {
+  font-size: 0.5rem;
+  opacity: 0.4;
+  flex-shrink: 0;
+}
+
+/* ============================================
+   DESIGN VEILLE WIDGET — Actualités & Inspiration
+   ============================================ */
+.design-veille {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Position unique — matrice de points bas-gauche */
+.ornament--veille-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 12px;
+  opacity: 0.55;
+}
+
+.design-veille__header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.design-veille__title {
+  font-size: var(--text-3xl);
+  font-weight: 200;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* Grille horizontale 4 articles côte à côte */
+.design-veille__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* Carte article — pleine hauteur, titre en overlay */
+.design-veille__card {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.08);
+  padding: 0;
+  background: rgba(255,255,255,0.02);
+  transition: all var(--transition-normal);
+  text-decoration: none;
+  color: var(--color-text);
+  cursor: pointer;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.design-veille__card:hover {
+  border-color: rgba(255,255,255,0.15);
+}
+
+/* Image wrapper — pleine hauteur */
+.design-veille__image-wrapper {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.design-veille__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 400ms ease-out;
+}
+
+.design-veille__card:hover .design-veille__image {
+  transform: scale(1.05);
+}
+
+/* Gradient + titre en overlay en bas de l'image */
+.design-veille__image-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.75) 100%);
+  pointer-events: none;
+}
+
+/* Titre positionné en overlay en bas */
+.design-veille__card-title {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  margin: 0;
+  padding: 8px 10px;
+  line-height: 1.3;
+  opacity: 1;
+  z-index: 1;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.8);
+}
+
+/* Footer */
+.design-veille__footer {
+  font-size: var(--text-xs);
+  opacity: 0.35;
+  text-align: center;
+  padding-top: 4px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+}
+
+/* (ancien .flex-widget supprimé — remplacé par .widget-card) */
+
+/* ============================================
+   FAQ WIDGET
+   ============================================ */
+.faq {
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* En-tête ornemental — coins + chevrons */
+.faq__header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.faq__header-ornament {
+  flex-shrink: 0;
+}
+
+.faq__header-ornament--right {
+  margin-left: auto;
+}
+
+.faq__corner-svg {
+  display: block;
+}
+
+.faq__title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.faq__title {
+  font-size: var(--text-2xl);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.faq__title-sub {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.4;
+}
+
+.faq__chevron {
+  flex-shrink: 0;
+}
+
+/* Items */
+.faq__items {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.faq__item {
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.faq__item:last-child {
+  border-bottom: none;
+}
+
+.faq__question {
+  width: 100%;
+  background: none;
+  border: none;
+  color: var(--color-white);
+  font-family: var(--font-primary);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  text-align: left;
+  padding: 7px 0;
+  cursor: pointer;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  letter-spacing: 0.02em;
+  opacity: 0.85;
+  transition: opacity var(--transition-fast);
+}
+
+.faq__question:hover {
+  opacity: 1;
+}
+
+.faq__item--open .faq__question {
+  opacity: 1;
+  color: var(--color-white);
+}
+
+.faq__question-marker {
+  font-size: var(--text-xs);
+  margin-top: 2px;
+  flex-shrink: 0;
+  color: var(--color-accent-coral);
+}
+
+.faq__answer {
+  font-size: var(--text-xs);
+  line-height: 1.6;
+  opacity: 0.65;
+  padding: 0 0 10px 18px;
+  animation: fadeInUp 0.2s ease-out both;
+}
+
+/* ============================================
+   MÉDIAS SOCIAUX
+   ============================================ */
+.medias {
+  flex: 1;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.medias__label {
+  font-size: var(--text-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.45;
+}
+
+.medias__title-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.medias__title {
+  font-size: 1.65rem;
+  font-weight: 200;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.medias__subtitle {
+  font-size: var(--text-xs);
+  font-weight: 300;
+  letter-spacing: 0.08em;
+  opacity: 0.5;
+  margin-top: 2px;
+}
+
+.medias__header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Widget Behold — conteneur pleine hauteur */
+.medias__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.medias__loading {
+  color: rgba(255,255,255,0.4);
+  font-size: 0.75rem;
+  padding: 8px;
+}
+
+.medias__post {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px;
+  display: block;
+  background: rgba(255,255,255,0.05);
+}
+
+.medias__post-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.medias__post:hover .medias__post-img {
+  transform: scale(1.05);
+}
+
+.medias__reel-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  font-size: 0.6rem;
+  color: white;
+  background: rgba(0,0,0,0.5);
+  border-radius: 3px;
+  padding: 2px 4px;
+}
+
+/* Footer — icônes + handle */
+.medias__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  padding-top: 12px;
+}
+
+.medias__icons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.medias__icon {
+  opacity: 0.7;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  cursor: pointer;
+  display: flex;
+}
+
+.medias__icon:hover {
+  opacity: 1;
+  transform: scale(1.12);
+}
+
+.medias__handle {
+  font-size: var(--text-xs);
+  opacity: 0.4;
+  letter-spacing: 0.03em;
+}
+
+/* ============================================
+   CONTACT — boîte plus imposante comme le Figma
+   ============================================ */
+.contact {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 20px 22px;
+}
+
+/* Titre en capsule avec ornement — style B.R.O */
+.contact__title-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 50px;
+  margin-bottom: 12px;
+  width: 100%;
+}
+
+.contact__title-plus {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+.contact__title-text {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.85;
+  flex-shrink: 0;
+}
+
+.contact__title-ornament {
+  flex: 1;
+  font-size: var(--text-sm);
+  letter-spacing: 0.05em;
+  opacity: 0.25;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+}
+
+.contact__info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: var(--text-sm);
+  opacity: 0.8;
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+.contact__cta {
+  display: block;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+/* ============================================
+   CHAT (dans le centre du dashboard)
+   ============================================ */
+.chat-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  scroll-behavior: smooth;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  max-width: 85%;
+  animation: messageIn var(--transition-normal) ease-out;
+}
+
+.message--agent { align-self: flex-start; }
+.message--user { align-self: flex-end; }
+
+.message__bubble {
+  padding: 12px 16px;
+  border-radius: 12px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.65;
+  word-wrap: break-word;
+}
+
+/* Paragraphes dans les bulles */
+.message__para {
+  margin: 0;
+}
+
+.message__para + .message__para {
+  margin-top: 10px;
+}
+
+/* Liens cliquables dans les bulles */
+.message__link {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  word-break: break-all;
+  opacity: 0.9;
+}
+
+.message__link:hover {
+  opacity: 1;
+  text-decoration-thickness: 2px;
+}
+
+.message--agent .message__bubble {
+  background: var(--color-accent-green);
+  color: var(--color-white);
+  border-bottom-left-radius: 4px;
+}
+
+.message--user .message__bubble {
+  background: var(--color-accent-coral);
+  color: var(--color-white);
+  border-bottom-right-radius: 4px;
+}
+
+.message__time {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: 3px;
+  padding: 0 5px;
+}
+
+.message--user .message__time { text-align: right; }
+
+/* Typing indicator */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 9px 13px;
+  background: rgba(255,255,255,0.10);
+  border-radius: 12px;
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+  max-width: 65px;
+}
+
+.typing-indicator__dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.45);
+  animation: bounce 1.4s ease-in-out infinite;
+}
+
+.typing-indicator__dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator__dot:nth-child(3) { animation-delay: 0.4s; }
+
+/* Input */
+.input-area {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 10px 14px;
+  background: rgba(0,0,0,0.15);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.input-area__field {
+  flex: 1;
+  padding: 12px 18px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 22px;
+  font-size: 0.95rem;
+  font-family: 'Open Sans', sans-serif;
+  color: var(--color-white);
+  background: rgba(255,255,255,0.06);
+  outline: none;
+  transition: border-color var(--transition-fast);
+  resize: none;
+  min-height: 46px;
+  max-height: 100px;
+  line-height: 1.4;
+}
+
+.input-area__field::placeholder {
+  color: rgba(255,255,255,0.3);
+}
+
+.input-area__field:focus {
+  border-color: rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.1);
+}
+
+.input-area__button {
+  width: 46px; height: 46px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  color: var(--color-white);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.input-area__button:hover {
+  background: rgba(255,255,255,0.22);
+}
+
+.input-area__button:active { transform: scale(0.93); }
+
+.input-area__button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ============================================
+   LOADING SCREEN
+   ============================================ */
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--color-black);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  transition: opacity 0.8s ease-out;
+}
+
+.loading-screen--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-screen__logo {
+  font-size: var(--text-3xl);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+.loading-screen__bar {
+  width: 120px;
+  height: 2px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.loading-screen__bar-fill {
+  height: 100%;
+  background: var(--color-white);
+  border-radius: 2px;
+  animation: loadingBar 1.5s ease-in-out infinite;
+}
+
+/* ============================================
+   ORNEMENTS DÉCORATIFS
+   ============================================ */
+.ornament {
+  position: absolute;
+  opacity: 0.6;
+}
+
+.ornament--top-right {
+  top: 12px;
+  right: 12px;
+}
+
+.ornament--top-left {
+  top: 12px;
+  left: 12px;
+}
+
+.ornament--bottom-right {
+  bottom: 12px;
+  right: 12px;
+}
+
+/* Taille max des ornements SVG pour éviter le chevauchement */
+.ornament svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Séparateur en croix ++++++++ */
+.ornament-separator {
+  font-size: var(--text-xs);
+  letter-spacing: 0.2em;
+  opacity: 0.25;
+  font-weight: 300;
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes messageIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounce {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-4px); }
+}
+
+@keyframes rotateStar {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes gradientShift {
+  0% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+@keyframes loadingBar {
+  0% { width: 0%; margin-left: 0; }
+  50% { width: 60%; margin-left: 20%; }
+  100% { width: 0%; margin-left: 100%; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulseSlow {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.04); opacity: 0.65; }
+}
+
+@keyframes floatSubtle {
+  0%, 100% { transform: translate(0, 0); }
+  33% { transform: translate(2px, -3px); }
+  66% { transform: translate(-2px, 1px); }
+}
+
+/* Pulsation séquentielle — ornement Horaire (opacité fixe, scale seulement) */
+@keyframes horaireDotPulse {
+  0%   { transform: scale(1); }
+  6%   { transform: scale(1.9); }
+  18%  { transform: scale(1); }
+  100% { transform: scale(1); }
+}
+
+.horaire-dot {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: horaireDotPulse 6s ease-in-out infinite;
+  fill: rgba(255, 255, 255, 0.22);
+}
+
+/* Point central pulsant — widget Calendrier */
+@keyframes centerDotPulse {
+  0%, 100% { transform: scale(1);   opacity: 0.28; }
+  50%       { transform: scale(2.4); opacity: 0.75; }
+}
+
+.ornament-center-dot {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: centerDotPulse 2.8s ease-in-out infinite;
+}
+
+/* Widget entrance — révélation clip-path de bas en haut */
+@keyframes clipReveal {
+  from {
+    clip-path: inset(0 0 100% 0);
+    opacity: 0;
+  }
+  to {
+    clip-path: inset(0 0 0% 0);
+    opacity: 1;
+  }
+}
+
+/* Fallback pour navigateurs sans clip-path (très rare) */
+@keyframes scaleInSubtle {
+  from { opacity: 0; transform: scale(0.98); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+/* Background gradient morphing — très subtil */
+@keyframes gradientMorphing {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Chat message paragraph stagger entrance */
+@keyframes paragraphSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Ornament hover — brightness et scale subtil */
+@keyframes ornamentGlow {
+  0% {
+    filter: brightness(1);
+  }
+  100% {
+    filter: brightness(1.15);
+  }
+}
+
+/* Classes d'animation pour ornements — ultra subtiles */
+.ornament--spin-slow {
+  animation: spinSlow 50s linear infinite;
+}
+
+.ornament--pulse-slow {
+  animation: pulseSlow 8s ease-in-out infinite;
+}
+
+.ornament--float-slow {
+  animation: floatSubtle 12s ease-in-out infinite;
+}
+
+/* Stagger entrance — révélation clip-path par vague */
+.stagger-1 { animation: clipReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both; }
+.stagger-2 { animation: clipReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s both; }
+.stagger-3 { animation: clipReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.25s both; }
+.stagger-4 { animation: clipReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both; }
+.stagger-5 { animation: clipReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both; }
+.stagger-6 { animation: clipReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both; }
+.stagger-7 { animation: clipReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.65s both; }
+.stagger-8 { animation: clipReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.75s both; }
+
+
+/* Ornament hover effect — subtil et rapide */
+.ornament-interactive {
+  transition: filter 200ms ease-out;
+}
+
+.ornament-interactive:hover {
+  filter: brightness(1.2);
+}
+
+/* Chat message paragraph — entrance stagger */
+.message-paragraph {
+  animation: paragraphSlideIn 0.4s ease-out forwards;
+  opacity: 0;
+}
+
+/* Applique stagger delays aux paragraphes */
+.message-paragraph:nth-child(1) { animation-delay: 0ms; }
+.message-paragraph:nth-child(2) { animation-delay: 80ms; }
+.message-paragraph:nth-child(3) { animation-delay: 160ms; }
+.message-paragraph:nth-child(4) { animation-delay: 240ms; }
+.message-paragraph:nth-child(5) { animation-delay: 320ms; }
+
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+.chat-area::-webkit-scrollbar,
+.horaire__courses::-webkit-scrollbar {
+  width: 3px;
+}
+
+.chat-area::-webkit-scrollbar-track,
+.horaire__courses::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-area::-webkit-scrollbar-thumb,
+.horaire__courses::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.12);
+  border-radius: 3px;
+}
+
+/* ============================================
+   ACCESSIBILITÉ
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================
+   RESPONSIVE — TABLETTE
+   ============================================ */
+@media (max-width: 1200px) {
+  .dashboard {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto auto 1fr auto;
+    overflow-y: auto;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  /* FIX 1 — #root ne doit plus clipper le contenu */
+  #root {
+    height: auto;
+    overflow: visible;
+  }
+
+  .grid-logo { grid-column: 1; grid-row: 1; }
+  .grid-session { grid-column: 2; grid-row: 1; }
+  .grid-header-spacer { display: none; }
+  .header-dates { grid-column: 3 / 5; grid-row: 1; }
+  .grid-center { grid-column: 1 / -1; grid-row: 2 / 3; min-height: 55vh; }
+  .grid-left { grid-column: 1 / 3; grid-row: 3; }
+  .grid-right { grid-column: 3 / 5; grid-row: 3; }
+
+  /* FIX 4 — grid-left/right : ne plus couper le contenu en overflow */
+  .grid-left,
+  .grid-right { overflow: visible; }
+
+  body { overflow: auto; }
+}
+
+/* ============================================
+   RESPONSIVE — MOBILE
+   ============================================ */
+@media (max-width: 640px) {
+  :root {
+    --gap: 8px;
+    --padding-card: 12px;
+  }
+
+  .dashboard {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto auto;
+  }
+
+  /* Ordre mobile : header → chat (plein écran) → calendrier → gauche → droite */
+  .grid-logo    { grid-column: 1; grid-row: 1; }
+  .grid-session { grid-column: 2; grid-row: 1; }
+  .grid-header-spacer { display: none; }
+  .grid-center  { grid-column: 1 / -1; grid-row: 2;
+                  /* Hauteur fixe = scroll dans le chat, pas dans la page */
+                  height: calc(100vh - 210px);
+                  height: calc(100svh - 210px); /* svh = exclut la barre du navigateur */ }
+  .header-dates { grid-column: 1 / -1; grid-row: 3; flex-direction: column; }
+  .grid-left    { grid-column: 1 / -1; grid-row: 4; }
+  .grid-right   { grid-column: 1 / -1; grid-row: 5; }
+
+
+  .widgets-row { flex-direction: column; }
+
+  /* FIX 2 — rangée Médias+Contact : hauteur fixe annulée quand empilée */
+  .grid-right > .widgets-row:last-child {
+    flex: 0 0 auto;
+    height: auto;
+  }
+
+  .widget-card {
+    aspect-ratio: auto;
+  }
+
+  /* FIX 3 — Design Veille : 2 colonnes au lieu de 4 sur mobile */
+  .design-veille__grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto auto;
+  }
+
+  /* FIX 5 — Curseur personnalisé inutile sur mobile/tactile */
+  .cursor-dot,
+  .cursor-halo {
+    display: none;
+  }
+
+  /* Ornements plus petits sur mobile */
+  .ornament svg {
+    width: 48px;
+    height: 48px;
+  }
+
+  .horaire__ornement {
+    max-width: 30%;
+  }
+
+  .horaire__title {
+    font-size: var(--text-2xl);
+  }
+}
