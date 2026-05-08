@@ -1,12 +1,11 @@
 // api/veille.js
-// Proxy RSS — récupère 1 article récent par source design
-// Mis en cache 1h côté Vercel (s-maxage=3600) pour ne pas surcharger les sources
+// Proxy RSS — veille IA générative en design graphique
+// Filtre : articles de moins de 10 jours seulement
+// Cache Vercel : 6h (s-maxage) pour fraîcheur tout en évitant le surcharge
 
-// ─── Sources RSS — IA générative en design graphique ─────────────────────
-// Axé sur : design graphique, design web, motion design, imprimé + IA générative
-// Ordre : FR en premier, EN ensuite. On prend 1 article par source.
-// Les 4 premières qui répondent = les 4 cartes affichées.
-// Les sources suivantes servent de secours si une des 4 premières est hors ligne.
+// ─── Sources RSS — design graphique + IA ────────────────────────────────
+// Ciblé : imprimé, web, motion, branding, outils IA pour designers
+// FR en premier, EN ensuite. On scanne jusqu'à MAX_ARTICLES articles frais.
 const RSS_FEEDS = [
   // ── Français ──
   {
@@ -15,42 +14,44 @@ const RSS_FEEDS = [
     fallbackImage: 'https://images.unsplash.com/photo-1686191128892-3b37add4c844?w=600&q=80',
   },
   {
-    label: 'Graphéine',
-    url: 'https://www.grapheine.com/feed/',
+    label: 'Étapes',
+    url: 'https://etapes.com/feed/',
     fallbackImage: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80',
   },
-  // ── Anglais — motion design & animation IA ──
-  {
-    label: 'Motionographer',
-    url: 'https://motionographer.com/feed/',
-    fallbackImage: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80',
-  },
-  // ── Anglais — outils IA pour designers ──
-  {
-    label: 'Creative Bloq',
-    url: 'https://feeds.feedburner.com/creativebloq/rss',
-    fallbackImage: 'https://images.unsplash.com/photo-1558618047-f5e85e2d3e93?w=600&q=80',
-  },
-  // ── Secours (utilisés seulement si une source ci-dessus ne répond pas) ──
+  // ── Anglais — design graphique & IA ──
   {
     label: 'Eye on Design',
     url: 'https://eyeondesign.aiga.org/feed/',
     fallbackImage: 'https://images.unsplash.com/photo-1636622433525-127afdf3662d?w=600&q=80',
   },
   {
-    label: 'Smashing Magazine',
-    url: 'https://www.smashingmagazine.com/feed/',
-    fallbackImage: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80',
+    label: "It's Nice That",
+    url: 'https://www.itsnicethat.com/rss',
+    fallbackImage: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80',
+  },
+  // ── Anglais — secours ──
+  {
+    label: 'Creative Bloq',
+    url: 'https://feeds.feedburner.com/creativebloq/rss',
+    fallbackImage: 'https://images.unsplash.com/photo-1558618047-f5e85e2d3e93?w=600&q=80',
   },
   {
-    label: 'Dezeen',
-    url: 'https://www.dezeen.com/design/feed/',
+    label: 'Applied Arts',
+    url: 'https://www.appliedartsmag.com/feed/',
     fallbackImage: 'https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=600&q=80',
+  },
+  {
+    label: 'Print Magazine',
+    url: 'https://www.printmag.com/feed/',
+    fallbackImage: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80',
   },
 ]
 
 // Nombre de cartes à afficher
 const MAX_ARTICLES = 4
+
+// Fraîcheur maximale des articles (en jours)
+const MAX_AGE_DAYS = 10
 
 // ─── Extraction du contenu d'un tag XML ───────────────────────────────────
 function extractTag(xml, tag) {
@@ -86,18 +87,41 @@ function extractImage(itemXml) {
   return null
 }
 
-// ─── Extraction du premier <item> d'un flux RSS ───────────────────────────
-function parseFirstItem(xml) {
-  const itemMatch = xml.match(/<item>([\s\S]*?)<\/item>/i)
-  if (!itemMatch) return null
+// ─── Extraction du premier item récent (≤ MAX_AGE_DAYS) ──────────────────
+// Scanne tous les <item> du flux et retourne le premier qui passe le filtre.
+// Si un item n'a pas de date, il est accepté (on ne peut pas vérifier).
+function parseRecentItem(xml, maxDays = MAX_AGE_DAYS) {
+  const cutoff = Date.now() - maxDays * 24 * 60 * 60 * 1000
+  const itemRegex = /<item>([\s\S]*?)<\/item>/gi
+  let match
 
-  const item = itemMatch[1]
-  const title = extractTag(item, 'title')
-  const link  = extractTag(item, 'link') || extractTag(item, 'guid')
-  const image = extractImage(item)
+  while ((match = itemRegex.exec(xml)) !== null) {
+    const item = match[1]
+    const title = extractTag(item, 'title')
+    const link  = extractTag(item, 'link') || extractTag(item, 'guid')
+    const image = extractImage(item)
 
-  if (!title || !link) return null
-  return { title, link, image }
+    if (!title || !link) continue
+
+    // Tente d'extraire la date de publication (formats variés selon les flux)
+    const rawDate =
+      extractTag(item, 'pubDate')   ||
+      extractTag(item, 'dc:date')   ||
+      extractTag(item, 'published') ||
+      extractTag(item, 'updated')
+
+    if (rawDate) {
+      const pubDate = new Date(rawDate)
+      if (!isNaN(pubDate.getTime()) && pubDate.getTime() < cutoff) {
+        console.log(`[Veille] Trop ancien (${pubDate.toDateString()}) — on passe`)
+        continue // article trop vieux, on essaie le suivant
+      }
+    }
+
+    return { title, link, image }
+  }
+
+  return null // aucun article frais dans ce flux
 }
 
 // ─── Handler principal ────────────────────────────────────────────────────
@@ -108,9 +132,9 @@ export default async function handler(req, res) {
 
   if (req.method === 'OPTIONS') return res.status(200).end()
 
-  // Cache côté Vercel Edge : 1 heure sans revalidation, 2 heures stale-while-revalidate
-  // → les visiteurs voient toujours une réponse instantanée, Vercel rafraîchit en arrière-plan
-  res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate=7200')
+  // Cache côté Vercel Edge : 6h sans revalidation, 12h stale-while-revalidate
+  // → fraîcheur garantie tout en évitant de surcharger les sources RSS
+  res.setHeader('Cache-Control', 's-maxage=21600, stale-while-revalidate=43200')
 
   const articles = []
 
@@ -133,7 +157,7 @@ export default async function handler(req, res) {
       }
 
       const xml = await response.text()
-      const item = parseFirstItem(xml)
+      const item = parseRecentItem(xml)
 
       if (item) {
         articles.push({

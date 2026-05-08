@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from 'react'
 
-// Données de secours affichées si l'API ne répond pas
+// Données de secours affichées si l'API ne répond pas ou si aucun article récent
 const FALLBACK_DATA = [
   {
     id: 1,
     image: 'https://images.unsplash.com/photo-1686191128892-3b37add4c844?w=600&q=80',
-    title: 'IA générative et identités visuelles',
+    title: 'IA générative et design graphique',
     link: 'https://www.creapills.com/',
   },
   {
     id: 2,
     image: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80',
-    title: 'Prompt design : vers une nouvelle esthétique',
-    link: 'https://www.grapheine.com/',
+    title: 'Tendances IA en design — Étapes',
+    link: 'https://etapes.com/',
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80',
-    title: 'Motion design et animation IA',
-    link: 'https://motionographer.com/',
+    image: 'https://images.unsplash.com/photo-1636622433525-127afdf3662d?w=600&q=80',
+    title: "L'IA transforme la profession de designer",
+    link: 'https://eyeondesign.aiga.org/',
   },
   {
     id: 4,
-    image: 'https://images.unsplash.com/photo-1558618047-f5e85e2d3e93?w=600&q=80',
-    title: 'Les meilleurs outils IA pour designers',
-    link: 'https://www.creativebloq.com/',
+    image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80',
+    title: 'Design & IA — It\'s Nice That',
+    link: 'https://www.itsnicethat.com/',
   },
 ]
 
