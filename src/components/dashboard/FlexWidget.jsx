@@ -1,10 +1,8 @@
 import React from 'react'
 
-// TODO: Connecter à Supabase — type peut être 'stage', 'bourse', 'info', etc.
-const FLEX_MOCK = {
-  type: 'Stage',
-  content: 'Stagiaire en impression chez Artext',
-}
+// TODO: Remplacer ECITE_COURS_URL par l'URL directe du cours IAG 032046 sur eCité
+// Ex.: https://ecite.lacitec.on.ca/course/view.php?id=XXXXX
+const ECITE_COURS_URL = 'https://ecite.lacitec.on.ca/'
 
 export default function FlexWidget() {
   return (
@@ -23,7 +21,7 @@ export default function FlexWidget() {
         </svg>
       </div>
 
-      <div className="widget-card__title">{FLEX_MOCK.type}</div>
+      <div className="widget-card__title">Ressources</div>
 
       <div className="widget-ornament-line">
         <span className="widget-ornament-line__dot" />
@@ -31,8 +29,21 @@ export default function FlexWidget() {
         <span className="widget-ornament-line__arrow">▶</span>
       </div>
 
-      <div className="widget-card__body widget-card__body--italic">
-        {FLEX_MOCK.content}
+      <div className="widget-card__body">
+        <a
+          href={ECITE_COURS_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            color: 'rgba(255,255,255,0.85)',
+            textDecoration: 'underline',
+            textUnderlineOffset: '3px',
+            fontSize: '0.8rem',
+            letterSpacing: '0.03em',
+          }}
+        >
+          Cours IAG 032046 sur eCité ↗
+        </a>
       </div>
     </div>
   )
