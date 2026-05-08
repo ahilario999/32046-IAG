@@ -15,7 +15,7 @@ const UA_DATA = {
       { nom: 'M.03', titre: 'Fondements du prompt design',                   mots: "A.C.T.I.F. · S.I.F.T. · Postures · Atelier HTML" },
       { nom: 'M.04', titre: 'Notions avancées en prompt',                    mots: "Signature visuelle · Styles artistiques · Références" },
     ],
-    evaluation: "↪ Éval. : Publications médias sociaux — 10 enjeux éthiques de l'IAG",
+    evaluation: "De façon individuelle, concevoir une série de publications pour les médias sociaux qui met en lumière les dix enjeux éthiques de l'utilisation de l'IAG dans une production graphique, afin de sensibiliser les professionnels de l'industrie des impacts de son utilisation. Présentation des projets en classe et des stratégies employées pour maximiser la conception du projet.",
   },
   'UA2': {
     titre: 'Productivité augmentée',
@@ -26,7 +26,7 @@ const UA_DATA = {
       { nom: 'M.08', titre: 'Illustration et mouvement IA-assistée',         mots: "Scripts · Expressions After Effects · Animation" },
       { nom: 'M.09', titre: "L'IA comme coéquipier de production",           mots: "Cohérence visuelle · Vérification · IA vs humain" },
     ],
-    evaluation: "↪ Éval. : Supports visuels lancement produit — démarche I.D.É.E.",
+    evaluation: "De façon individuelle, à l'aide des notions vues en classe et en intégrant l'IAG à chaque étape de la démarche I.D.É.E., concevoir l'ensemble des supports visuels pour le lancement d'un produit. Les actifs de base sont fournis (image produit, slogan et texte de campagne). La direction artistique, la conception et la production des livrables sont entièrement réalisées en co-création avec l'IAG.",
   },
   'UA3': {
     titre: 'Créativité & co-création',
@@ -37,7 +37,7 @@ const UA_DATA = {
       { nom: 'M.13', titre: "Résolution créative par l'IAG",                 mots: "Déblocage · Co-génération · Design System · Itération" },
       { nom: 'M.14', titre: "L'intention de design hybride",                 mots: "Pitch final · Défense des choix · Intégrité pro." },
     ],
-    evaluation: "↪ Éval. : Prototype fonctionnel — outil répondant à une problématique réelle",
+    evaluation: "De façon individuelle, concevoir un outil qui résout concrètement la problématique identifiée, en démontrant une utilisation créative et réfléchie de l'IAG à chaque étape de la démarche. L'outil doit répondre à un besoin réel de la pratique professionnelle en design graphique. Le prototype fonctionnel sera présenté en classe à la fin du projet.",
   },
 }
 
@@ -81,6 +81,7 @@ export default function HoraireWidget() {
       </div>
 
       <div className="horaire__courses">
+        {/* Liste des modules avec mots-clés */}
         {ua.modules.map((mod, i) => (
           <div className="horaire__course" key={i}>
             <div className="horaire__course-name" style={{ fontSize: '1.14rem' }}>
@@ -93,9 +94,12 @@ export default function HoraireWidget() {
           </div>
         ))}
 
-        {/* Badge évaluation sommative */}
-        <div className="horaire__course" style={{ marginTop: '6px', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '8px' }}>
-          <div className="horaire__course-detail" style={{ fontSize: '1.05rem', opacity: 0.7, fontStyle: 'italic' }}>
+        {/* Évaluation sommative — descriptif complet */}
+        <div className="horaire__course" style={{ marginTop: '10px', borderTop: '1px solid rgba(255,255,255,0.12)', paddingTop: '10px' }}>
+          <div className="horaire__course-name" style={{ fontSize: '0.75rem', textTransform: 'uppercase', letterSpacing: '0.1em', opacity: 0.5, marginBottom: '6px' }}>
+            Évaluation sommative
+          </div>
+          <div className="horaire__course-detail" style={{ fontSize: '1.05rem', opacity: 0.85, lineHeight: 1.55 }}>
             {ua.evaluation}
           </div>
         </div>
