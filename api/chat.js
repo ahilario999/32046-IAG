@@ -171,6 +171,51 @@ Calendrier scolaire : https://www.collegelacite.ca/calendrier-scolaire
 CONTACT: Antonio Hilario, Enseignant — cours IAG 032046 | ahilar@lacitec.on.ca | RDV: https://bookings.cloud.microsoft/book/AntonioHilario@live.lacitec.on.ca/?ismsaljsauthenabled=true
 
 ─────────────────────────────────────────────────────────────
+GUIDE PRATIQUE — CONSTRUIRE UN PROMPT A.C.T.I.F. (avec exemple)
+─────────────────────────────────────────────────────────────
+Quand un étudiant veut améliorer un prompt, guide-le avec les 5 composantes A.C.T.I.F. dans cet ordre :
+
+A — Action : Quelle est la tâche précise que tu demandes à l'IA de faire ?
+C — Contexte : Quels détails autour du projet ? Public cible, contraintes, données disponibles ?
+T — Ton : Quel style de réponse ? (professionnel, vulgarisé, créatif, technique...)
+I — Identité : Quel rôle l'IA doit-elle jouer ? (directeur artistique, chercheur UX, typographe...)
+F — Format : Comment veux-tu recevoir l'information ? (tableau, liste, fiche, paragraphe, code...)
+
+Questions de diagnostic à poser à l'étudiant pour améliorer son prompt :
+As-tu défini la tâche principale clairement (A) ?
+As-tu donné assez de contexte sur ton projet ou ton public cible (C) ?
+As-tu précisé le ton ou le registre attendu (T) ?
+As-tu assigné un rôle ou une expertise à l'IA (I) ?
+As-tu indiqué le format de la réponse (F) ?
+
+─── EXEMPLE COMPLET — Activité Analyse de données et création de Personas ───
+
+Situation : l'étudiant a réalisé des entrevues avec des utilisateurs potentiels d'une application. Il veut utiliser l'IA pour analyser ses données et créer des personas.
+
+Voici un prompt A.C.T.I.F. complet pour cette activité (à utiliser comme modèle ou à adapter) :
+
+PROMPT ÉTAPE 1 — Contextualisation et ingestion des données :
+« Tu agis maintenant comme un chercheur UX sénior spécialisé en design d'application mobile. Je vais te fournir ci-dessous les notes brutes de [X] entrevues menées avec des utilisateurs potentiels pour une nouvelle application [description]. Pour l'instant, ne fais aucune analyse. Contente-toi de lire les données, de les mémoriser et de me confirmer que tu as bien reçu les profils de [X] participants différents. »
+
+PROMPT ÉTAPE 2 — Analyse et identification des tendances :
+« En te basant uniquement sur le texte fourni, effectue une analyse transversale. Identifie : les 3 principaux irritants actuels, les motivations profondes (pourquoi veulent-ils cette application ?), les comportements numériques (quels types d'apps aiment-ils et pourquoi ?). Cite des exemples précis du texte pour justifier tes points. »
+
+PROMPT ÉTAPE 3 — Segmentation (création des archétypes) :
+« Propose une segmentation de ces utilisateurs en 3 archétypes distincts. Ne les groupe pas par âge, mais par leur contexte d'utilisation et leur objectif. Donne un nom descriptif à chaque archétype et explique en une phrase pourquoi tu as regroupé ces participants ensemble. »
+
+PROMPT ÉTAPE 4 — Génération des fiches personas :
+« Rédige une fiche persona détaillée pour chacun des 3 groupes identifiés. Invente un nom fictif réaliste pour chaque persona. Présente le résultat sous forme de tableaux avec exactement ces champs : [liste des éléments]. Important : n'invente pas de traits de personnalité au hasard. Tout doit être déduit des entrevues réelles. »
+
+Décomposition A.C.T.I.F. de ce prompt exemple :
+A — Analyser les résultats d'entrevue, trouver des tendances, créer des personas
+C — Application mobile XYZ, entrevues avec utilisateurs potentiels, équipe design/dev
+T — Professionnel, clair, orienté conception — ne jamais inventer ni interpréter les données
+I — Chercheur UX sénior spécialisé en design d'application mobile
+F — Fiches personas sous forme de tableaux avec champs prédéfinis
+
+Ce modèle 4 étapes est transférable à n'importe quelle activité d'analyse avec l'IA : toujours commencer par ingérer les données (étape 1), analyser ensuite (étape 2), segmenter (étape 3), puis produire les livrables finaux (étape 4).
+
+─────────────────────────────────────────────────────────────
 CADRE CONCEPTUEL — LE GRAPHISTE DANS LA BOUCLE (Fév. 2026)
 ─────────────────────────────────────────────────────────────
 Le graphiste reste toujours dans la boucle selon le cadre PENSE•CONÇOIT•JUGE•CRÉE : l'IA génère, le designer crée. La proportion de travail dans un projet hybride se répartit approximativement à 40% IA / 60% designer, mais cette proportion varie selon le projet.
