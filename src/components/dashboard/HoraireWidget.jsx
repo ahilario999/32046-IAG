@@ -8,95 +8,36 @@ import React, { useState } from 'react'
  */
 const UA_DATA = {
   'UA1': {
-    titre: 'Les pratiques éthiques dans les techniques de prompt',
-    objectif: "Appliquer des pratiques éthiques et responsables dans l'élaboration et l'utilisation de prompts, afin de garantir l'intégrité, l'équité et la conformité des contenus générés par l'IAG.",
+    titre: 'Pratiques éthiques & prompt',
     modules: [
-      {
-        nom: 'Module 1',
-        titre: "Introduction à l'IAG pour un graphiste",
-        description: "Panorama des outils LLM. Contexte industrie : l'IA génère, elle ne crée pas. Biais, idées reçues, impact sur la profession. Présentation du cadre conceptuel pour la session.",
-      },
-      {
-        nom: 'Module 2',
-        titre: 'Éthique et propriété intellectuelle',
-        description: "Droit d'auteur canadien et IA. Biais algorithmiques et stéréotypes. Transparence obligatoire (code RGD). Déclaration IA en pratique professionnelle.",
-      },
-      {
-        nom: 'Module 3',
-        titre: 'Fondements du prompt design',
-        description: "Structure A.C.T.I.F. (Action · Contexte · Ton · Identité · Format). Types d'instructions et de postures (style, ambiance, rôle). Vérification S.I.F.T. avant d'agir. Atelier : concevoir un outil HTML de type éditeur de prompt basé sur A.C.T.I.F.",
-      },
-      {
-        nom: 'Module 4',
-        titre: 'Notions avancées en prompt (style, esthétique, références)',
-        description: "Construire un prompt « signature visuelle » à l'aide d'images de référence. Analyse de styles artistiques par l'IA. Finition et ajustement au projet final.",
-      },
+      { nom: 'M.01', titre: "Introduction à l'IAG pour un graphiste",       mots: "LLM · IA génère vs crée · Biais · Impact profession" },
+      { nom: 'M.02', titre: 'Éthique et propriété intellectuelle',           mots: "Droit d'auteur · Biais algorithmiques · Code RGD" },
+      { nom: 'M.03', titre: 'Fondements du prompt design',                   mots: "A.C.T.I.F. · S.I.F.T. · Postures · Atelier HTML" },
+      { nom: 'M.04', titre: 'Notions avancées en prompt',                    mots: "Signature visuelle · Styles artistiques · Références" },
     ],
-    evaluation: "↪ Éval. sommative : Concevoir une série de publications médias sociaux mettant en lumière 10 enjeux éthiques de l'utilisation de l'IAG en production graphique. Présentation orale en classe.",
+    evaluation: "↪ Éval. : Publications médias sociaux — 10 enjeux éthiques de l'IAG",
   },
   'UA2': {
-    titre: "Productivité et intelligence artificielle générative",
-    objectif: "Optimiser sa productivité en intégrant des outils d'IA générative pour automatiser, simplifier et améliorer la gestion de ses tâches et de ses projets.",
+    titre: 'Productivité augmentée',
     modules: [
-      {
-        nom: 'Module 5',
-        titre: "Optimiser la gestion de projet avec l'IA",
-        description: "Maximiser le potentiel des outils IA dans la co-gestion d'un projet. Organisation du flux de travail avec l'IA. Présentation de la démarche I.D.É.E. Les outils IA pour la recherche. Atelier : à partir d'un brief client, co-construction avec l'IA d'un flux de travail complet (phases, tâches, jalons, charge).",
-      },
-      {
-        nom: 'Module 6',
-        titre: "Génération et édition d'image IA-assistée",
-        description: "Outils et plateformes pour la génération d'image de qualité professionnelle. Potentiel et limites des images conçues par l'IAG. La cohérence de personnage (Character Consistency). Le transfert de référence visuelle (Character Reference). Documentation des itérations.",
-      },
-      {
-        nom: 'Module 7',
-        titre: 'Mise en page IA-assistée',
-        description: "Maximiser le potentiel des scripts créés par l'IA pour l'automatisation de tâches. Déclinaisons rapides et variation de formats. Gestion des fichiers exportés selon le contexte. Atelier : co-rédaction d'un script typographique (espaces insécables, veuves et orphelines, styles uniformes).",
-      },
-      {
-        nom: 'Module 8',
-        titre: 'Illustration et image en mouvement IA-assistée',
-        description: "Maximiser le potentiel des scripts créés par l'IA pour l'automatisation de tâches. Maximiser le potentiel des expressions créées par l'IA pour l'automatisation d'animation. Atelier : co-rédaction d'expressions d'animation (synchronisation, cycles, vitesse dynamique, déclenchement conditionnel).",
-      },
-      {
-        nom: 'Module 9',
-        titre: "L'IA comme coéquipier de production",
-        description: "L'IA comme réviseure de cohérence visuelle. Prompt engineering pour vérification stylistique. Critiques croisées IA vs humain. L'IA comme assistante à la validation technique. Atelier : co-conception d'outils de vérification (cohérence visuelle, simulateur de public cible, grille de validation).",
-      },
+      { nom: 'M.05', titre: "Optimiser la gestion de projet avec l'IA",      mots: "I.D.É.E. · Flux de travail · Brief client · Recherche IA" },
+      { nom: 'M.06', titre: "Génération et édition d'image IA-assistée",     mots: "Génération image · Character Consistency · Style Transfer" },
+      { nom: 'M.07', titre: 'Mise en page IA-assistée',                      mots: "Scripts typo · Déclinaisons · Formats export" },
+      { nom: 'M.08', titre: 'Illustration et mouvement IA-assistée',         mots: "Scripts · Expressions After Effects · Animation" },
+      { nom: 'M.09', titre: "L'IA comme coéquipier de production",           mots: "Cohérence visuelle · Vérification · IA vs humain" },
     ],
-    evaluation: "↪ Éval. sommative : À l'aide de la démarche I.D.É.E., concevoir l'ensemble des supports visuels pour le lancement d'un produit. Les actifs de base sont fournis (image, slogan, texte). Direction artistique et production entièrement en co-création avec l'IAG.",
+    evaluation: "↪ Éval. : Supports visuels lancement produit — démarche I.D.É.E.",
   },
   'UA3': {
-    titre: "Créativité et intelligence artificielle générative",
-    objectif: "Exploiter l'IAG dans une démarche de co-création, en combinant son processus créatif personnel avec les capacités des outils d'IAG pour concevoir des concepts novateurs et originaux.",
+    titre: 'Créativité & co-création',
     modules: [
-      {
-        nom: 'Module 10',
-        titre: 'Idéation et décodage du mandat hybride',
-        description: "Phase Idéation du processus créatif appuyé par la démarche I.D.É.E. Décorticage du besoin client et brainstorming à l'aide de LLM. L'esquisse manuelle avant toute génération IA. Atelier : stimulation d'une liste de problématiques issues de la pratique du design. Identification et sélection de la problématique personnelle.",
-      },
-      {
-        nom: 'Module 11',
-        titre: 'Développement et exploration générative',
-        description: "Utilisation de la machine comme moteur à variations. L'IAG pour multiplier les pistes visuelles à partir de ses propres croquis et établir la direction artistique globale. Atelier : génération de 3 directions visuelles distinctes, chacune issue d'un angle différent. Documentation raisonnée des décisions.",
-      },
-      {
-        nom: 'Module 12',
-        titre: 'Évaluation critique et intention conceptuelle',
-        description: "Test de hiérarchie visuelle avec l'IA. L'inspecteur d'accessibilité (conformité et contrastes). Le simulateur du public cible (validation du message). Atelier : audit de cohérence visuelle, reformulation du prompt à partir des constats, validation de l'intention conceptuelle.",
-      },
-      {
-        nom: 'Module 13',
-        titre: "Résolution créative par l'IAG",
-        description: "Utilisation de l'IAG pour surmonter les blocages techniques du prototype. Co-génération de solutions à des problèmes de conception non résolus. Itération rapide assistée par l'IAG. Déconstruction du concept en composantes réutilisables (Design System appliqué à l'outil).",
-      },
-      {
-        nom: 'Module 14',
-        titre: "L'intention de design hybride",
-        description: "Préparation du pitch final devant client. Défendre ses choix de conception. Démontrer clairement l'intégrité professionnelle tout au long de la co-création avec l'IAG.",
-      },
+      { nom: 'M.10', titre: 'Idéation et décodage du mandat hybride',        mots: "I.D.É.E. · Brainstorming LLM · Esquisse manuelle d'abord" },
+      { nom: 'M.11', titre: 'Développement et exploration générative',       mots: "Variations · Pistes visuelles · Direction artistique" },
+      { nom: 'M.12', titre: 'Évaluation critique et intention conceptuelle', mots: "Hiérarchie · Accessibilité · Simulateur public cible" },
+      { nom: 'M.13', titre: "Résolution créative par l'IAG",                 mots: "Déblocage · Co-génération · Design System · Itération" },
+      { nom: 'M.14', titre: "L'intention de design hybride",                 mots: "Pitch final · Défense des choix · Intégrité pro." },
     ],
-    evaluation: "↪ Éval. sommative : Concevoir un outil qui résout concrètement une problématique réelle de la pratique en design graphique. Utilisation créative et réfléchie de l'IAG à chaque étape. Prototype fonctionnel présenté en classe.",
+    evaluation: "↪ Éval. : Prototype fonctionnel — outil répondant à une problématique réelle",
   },
 }
 
@@ -134,30 +75,27 @@ export default function HoraireWidget() {
         ))}
       </div>
 
-      {/* Titre et objectif de l'UA */}
-      <div style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.08em', opacity: 0.5, padding: '2px 0 2px 0' }}>
+      {/* Sous-titre de l'UA */}
+      <div style={{ fontSize: '0.65rem', textTransform: 'uppercase', letterSpacing: '0.08em', opacity: 0.45, padding: '2px 0 8px 0' }}>
         {ua.titre}
-      </div>
-      <div style={{ fontSize: '0.7rem', opacity: 0.45, fontStyle: 'italic', marginBottom: '8px', lineHeight: 1.45 }}>
-        {ua.objectif}
       </div>
 
       <div className="horaire__courses">
         {ua.modules.map((mod, i) => (
           <div className="horaire__course" key={i}>
-            <div className="horaire__course-name">
-              <span style={{ opacity: 0.5, fontSize: '0.75em', fontWeight: 400, marginRight: '4px' }}>{mod.nom} —</span>
+            <div className="horaire__course-name" style={{ fontSize: '0.85rem' }}>
+              <span style={{ opacity: 0.45, fontSize: '0.8em', fontWeight: 400, marginRight: '5px' }}>{mod.nom} —</span>
               {mod.titre}
             </div>
-            <div className="horaire__course-detail">
-              {mod.description}
+            <div className="horaire__course-detail" style={{ fontSize: '0.8rem', opacity: 0.6 }}>
+              {mod.mots}
             </div>
           </div>
         ))}
 
         {/* Badge évaluation sommative */}
         <div className="horaire__course" style={{ marginTop: '6px', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '8px' }}>
-          <div className="horaire__course-detail" style={{ opacity: 0.75, fontStyle: 'italic' }}>
+          <div className="horaire__course-detail" style={{ fontSize: '0.78rem', opacity: 0.7, fontStyle: 'italic' }}>
             {ua.evaluation}
           </div>
         </div>
