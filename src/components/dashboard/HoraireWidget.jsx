@@ -35,7 +35,7 @@ const UA_DATA = {
         concepts: "Style · Esthétique · Références visuelles",
       },
     ],
-    evaluation: '↪ Éval. : Série publications — 10 enjeux éthiques de l'IAG',
+    evaluation: "↪ Éval. : Série publications — 10 enjeux éthiques de l'IAG",
   },
   'UA2': {
     titre: 'Productivité augmentée',
@@ -97,7 +97,7 @@ const UA_DATA = {
       {
         nom: 'Module 13',
         code: 'RÉSOLUTION',
-        detail: 'Résolution créative par l'IAG',
+        detail: "Résolution créative par l'IAG",
         concepts: "Déblocage · Itération rapide · Design System",
       },
       {
