@@ -6,7 +6,7 @@ export default function ContactWidget() {
 
       <div className="contact__title-pill">
         <span className="contact__title-plus">+</span>
-        <span className="contact__title-text">Pour nous joindre</span>
+        <span className="contact__title-text">Pour me rejoindre</span>
       </div>
 
       <div className="contact__info">
