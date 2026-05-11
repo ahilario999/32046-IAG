@@ -56,9 +56,14 @@ const SYSTEM_PROMPT = `Tu es B.O.B. (Boîte à Outils et de Bases), assistant IA
 TON: Chaleureux, accessible, encourageant. Tutoie TOUJOURS l’étudiant (tu/toi/ton/ta). Jamais de vouvoiement. Dynamique mais pas superficiel.
 LANGUE: Français canadien (tu comprends aussi l’anglais).
 FORMAT OBLIGATOIRE: Aucun markdown. Interdiction absolue d’utiliser ###, **, *, #, tirets (-), puces ou tout symbole de liste. Paragraphes courts séparés par une ligne vide. Si tu dois énumérer, écris chaque item sur sa propre ligne sans symbole devant.
-RÈGLE URL ABSOLUE: N’invente JAMAIS une URL. N’utilise QUE les URLs explicitement listées dans ce prompt. Si tu n’as pas l’URL exact, écris le nom du service sans lien ou réfère à M. Hilario.
-RÈGLE CONNAISSANCE ABSOLUE: Tu réponds UNIQUEMENT à partir des informations écrites dans ce prompt. Pour tout ce qui n’est pas ici, dis-le clairement et dirige vers M. Hilario.
-SI TU NE SAIS PAS: Réponds honnêtement et réfère à M. Hilario : ahilar@lacitec.on.ca | RDV : https://bookings.cloud.microsoft/book/AntonioHilario@live.lacitec.on.ca/?ismsaljsauthenabled=true
+RÈGLE URL ABSOLUE: N’invente JAMAIS une URL. N’utilise QUE les URLs explicitement listées dans ce prompt. Si tu n’as pas l’URL exact, écris le nom du service sans lien.
+RÈGLE CONNAISSANCE ABSOLUE: Tu réponds UNIQUEMENT à partir des informations écrites dans ce prompt. Pour tout ce qui n’est pas ici, guide vers les ressources du cours en premier.
+
+HIÉRARCHIE DE RÉFÉRENCEMENT — applique toujours dans cet ordre :
+1. RÉPONSE DIRECTE : si la question porte sur le contenu du cours (modules, UAs, évaluations, cadres A.C.T.I.F./I.D.É.E./S.I.F.T., outils IA, éthique, propriété intellectuelle) → réponds avec les infos disponibles dans ce prompt.
+2. RESSOURCES DU COURS : si la question porte sur les consignes détaillées, les livrables, les dates ou le matériel pédagogique → dirige vers eCité : https://ecite.lacitec.on.ca/
+3. SERVICES COLLÉGIAUX : pour le tutorat, l’aide à la réussite, le calendrier → dirige vers les ressources listées ci-dessous.
+4. M. HILARIO EN DERNIER RECOURS : uniquement si la question nécessite une décision humaine (validation de la problématique UA3, situations personnelles, questions administratives) → ahilar@lacitec.on.ca | RDV : https://bookings.cloud.microsoft/book/AntonioHilario@live.lacitec.on.ca/?ismsaljsauthenabled=true
 
 COURS: 032046 — Productivité et intelligence artificielle générative
 PROGRAMME: Design Graphique (61508/61777), La Cité Collégiale, Ottawa
@@ -297,15 +302,15 @@ export default async function handler(req, res) {
       const lastQuestion = messages[messages.length - 1]?.text || '(question inconnue)';
       await logUnanswered(lastQuestion);
       return res.status(200).json({
-        reply: "Je n'ai pas la réponse pour toi, mais tu peux envoyer un message à M. Hilario : ahilar@lacitec.on.ca",
+        reply: "Je n'ai pas cette info pour toi. Consulte d'abord le cours sur eCité (ecite.lacitec.on.ca). Si tu ne trouves pas, écris à M. Hilario : ahilar@lacitec.on.ca",
       });
     }
 
     // 4. Extraction de la réponse
     const reply = data.choices?.[0]?.message?.content 
-      || "Je n'ai pas la réponse pour toi, mais tu peux envoyer un message à M. Hilario : ahilar@lacitec.on.ca";
+      || "Je n'ai pas cette info pour toi. Consulte d'abord le cours sur eCité (ecite.lacitec.on.ca). Si tu ne trouves pas, écris à M. Hilario : ahilar@lacitec.on.ca";
 
-    if (reply.includes("Je n'ai pas la réponse pour toi")) {
+    if (reply.includes("Je n'ai pas cette info")) {
       const lastQuestion = messages[messages.length - 1]?.text || '(question inconnue)';
       await logUnanswered(lastQuestion);
     }
@@ -319,7 +324,7 @@ export default async function handler(req, res) {
     await logUnanswered(lastQuestion); 
     
     return res.status(200).json({
-      reply: "Je n'ai pas la réponse pour toi, mais tu peux envoyer un message à M. Hilario : ahilar@lacitec.on.ca",
+      reply: "Je n'ai pas cette info pour toi. Consulte d'abord le cours sur eCité (ecite.lacitec.on.ca). Si tu ne trouves pas, écris à M. Hilario : ahilar@lacitec.on.ca",
     });
   }
 }
