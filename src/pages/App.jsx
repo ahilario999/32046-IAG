@@ -54,7 +54,7 @@ export default function App() {
         <div className="grid-logo stagger-1">
           <div className="brand-logo">
             <img
-              src="/assets/logo_32046.svg"
+              src="/assets/logo_32046_square.svg"
               alt="Productivité et IA Générative — 032046"
               className="brand-logo__img"
             />
