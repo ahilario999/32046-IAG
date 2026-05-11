@@ -4,8 +4,7 @@ import DynamicBackground from '../components/dashboard/DynamicBackground'
 import HeaderBRO from '../components/dashboard/HeaderBRO'
 import DatesImportantes from '../components/dashboard/DatesImportantes'
 import HoraireWidget from '../components/dashboard/HoraireWidget'
-import ImpressionWidget from '../components/dashboard/ImpressionWidget'
-import PretMultimediaWidget from '../components/dashboard/PretMultimediaWidget'
+import PrincipesWidget from '../components/dashboard/PrincipesWidget'
 import TutoratWidget from '../components/dashboard/TutoratWidget'
 import FlexWidget from '../components/dashboard/FlexWidget'
 import DesignVeilleWidget from '../components/dashboard/DesignVeilleWidget'
@@ -15,7 +14,7 @@ import ChatInterface from '../components/ChatInterface'
 
 // ===== DÉMO MODE — Simuler A26 (Août 2026) pour présentation =====
 const DEMO_MODE = true // Changer à false pour mode production
-const DEMO_SESSION_CODE = 'A26'
+const DEMO_SESSION_CODE = 'H28'
 
 // Fonction pour déterminer le code de saison (A/H) et l'année
 function getSessionCode() {
@@ -66,7 +65,7 @@ export default function App() {
         <div className="grid-session glass stagger-1">
           {/* Rangée haut : automne | étoile */}
           <div className="session-top">
-            <div className="session-top__pill">automne</div>
+            <div className="session-top__pill">32046</div>
             <div className="session-top__sep" />
             <div className="session-top__star ornament--spin-slow">✱</div>
           </div>
@@ -104,10 +103,7 @@ export default function App() {
         {/* Cols 1-2 : Colonne gauche */}
         <div className="grid-left">
           <HoraireWidget />
-          <div className="widgets-row">
-            <ImpressionWidget />
-            <PretMultimediaWidget />
-          </div>
+          <PrincipesWidget />
         </div>
 
         {/* Cols 3-4 : Chatbot central — B.R.O capsule est DEDANS */}
