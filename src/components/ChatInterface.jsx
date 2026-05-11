@@ -5,7 +5,7 @@ import TypingIndicator from './TypingIndicator'
 
 const WELCOME_MESSAGE = {
   role: 'agent',
-  text: "Salut ! Je suis B.O.B. — ton assistant pour le cours IAG 032046. Je connais les 3 UAs, les 14 modules, les cadres A.C.T.I.F., I.D.É.E. et S.I.F.T., ainsi que les ressources du cours. Pose-moi ta question !",
+  text: "Salut ! Je suis B.O.B. — ton assistant virtuel pour le cours. Pose-moi ta question !",
   timestamp: new Date(),
 }
 
