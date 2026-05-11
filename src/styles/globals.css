@@ -16,6 +16,7 @@
   --color-text: #FFFFFF;
   --color-text-muted: rgba(255, 255, 255, 0.55);
   --color-accent-green: #17A84A;
+  --color-accent-teal: #00C9A7;
   --color-accent-coral: #D85A30;
   --color-accent-red: #E24B4A;
 
@@ -1361,8 +1362,8 @@ a:hover { opacity: 0.8; }
 }
 
 .message--agent .message__bubble {
-  background: var(--color-accent-green);
-  color: var(--color-white);
+  background: var(--color-accent-teal);
+  color: var(--color-black);
   border-bottom-left-radius: 4px;
 }
 
@@ -1436,7 +1437,7 @@ a:hover { opacity: 0.8; }
 }
 
 .input-area__field:focus {
-  border-color: rgba(255,255,255,0.35);
+  border-color: var(--color-accent-teal);
   background: rgba(255,255,255,0.1);
 }
 
@@ -1456,7 +1457,8 @@ a:hover { opacity: 0.8; }
 }
 
 .input-area__button:hover {
-  background: rgba(255,255,255,0.22);
+  background: var(--color-accent-teal);
+  color: var(--color-black);
 }
 
 .input-area__button:active { transform: scale(0.93); }
