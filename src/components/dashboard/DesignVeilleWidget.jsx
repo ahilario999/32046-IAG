@@ -1,29 +1,38 @@
 import React, { useEffect, useState } from 'react'
 
-// Données de secours affichées si l'API ne répond pas ou si aucun article récent
+// Images Unsplash thématiques — IA + design graphique
+// Utilisées en fallback ET comme onError si une image externe ne charge pas
+const THEMED_IMAGES = [
+  'https://images.unsplash.com/photo-1686191128892-3b37add4c844?w=600&q=80', // IA générative
+  'https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=600&q=80', // design graphique
+  'https://images.unsplash.com/photo-1636622433525-127afdf3662d?w=600&q=80', // motion / créatif
+  'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80',    // print / mise en page
+]
+
+// Données affichées si l'API ne répond pas
 const FALLBACK_DATA = [
   {
     id: 1,
-    image: 'https://images.unsplash.com/photo-1686191128892-3b37add4c844?w=600&q=80',
+    image: THEMED_IMAGES[0],
     title: 'IA générative et design graphique',
     link: 'https://www.creapills.com/',
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80',
-    title: 'Tendances IA en design — Étapes',
-    link: 'https://etapes.com/',
+    image: THEMED_IMAGES[1],
+    title: 'Tendances IA en design — Grapheine',
+    link: 'https://www.grapheine.com/',
   },
   {
     id: 3,
-    image: 'https://images.unsplash.com/photo-1636622433525-127afdf3662d?w=600&q=80',
+    image: THEMED_IMAGES[2],
     title: "L'IA transforme la profession de designer",
     link: 'https://eyeondesign.aiga.org/',
   },
   {
     id: 4,
-    image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80',
-    title: 'Design & IA — It\'s Nice That',
+    image: THEMED_IMAGES[3],
+    title: "Design & IA — It's Nice That",
     link: 'https://www.itsnicethat.com/',
   },
 ]
@@ -37,7 +46,6 @@ export default function DesignVeilleWidget() {
       .then(r => r.json())
       .then(data => {
         if (data.articles && data.articles.length > 0) {
-          // Ajoute un id à chaque article pour la clé React
           setArticles(data.articles.map((a, i) => ({ ...a, id: i + 1 })))
         } else {
           setArticles(FALLBACK_DATA)
@@ -93,12 +101,12 @@ export default function DesignVeilleWidget() {
         </div>
       </div>
 
-      {/* Grille d'articles — colonnes adaptées au nb réel d'articles */}
+      {/* Grille d'articles */}
       <div
         className="design-veille__grid"
         style={{ gridTemplateColumns: `repeat(${display.length}, 1fr)` }}
       >
-        {display.map((article) => (
+        {display.map((article, idx) => (
           <a
             key={article.id}
             href={article.link}
@@ -112,6 +120,12 @@ export default function DesignVeilleWidget() {
                 alt={article.title}
                 className="design-veille__image"
                 loading="lazy"
+                onError={(e) => {
+                  // Si l'image externe échoue (hotlink bloqué, 404, etc.)
+                  // on remplace par l'image thématique correspondante
+                  e.currentTarget.onerror = null
+                  e.currentTarget.src = THEMED_IMAGES[idx % THEMED_IMAGES.length]
+                }}
               />
               <div className="design-veille__image-overlay" />
             </div>
