@@ -243,13 +243,13 @@ a:hover { opacity: 0.8; }
 .brand-logo {
   width: 100%;
   aspect-ratio: 1;
-  background: var(--color-accent-green);
+  background: transparent;
   border-radius: var(--radius);
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 24px rgba(23, 168, 74, 0.25);
+  box-shadow: 0 6px 24px rgba(0, 201, 167, 0.25);
 }
 
 .brand-logo__img {

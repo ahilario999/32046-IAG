@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <!-- Fond teal -->
+  <rect width="400" height="400" fill="#00C9A7"/>
+
+  <!-- Globe filaire — centre 200,200 rayon 155 -->
+  <!-- Cercle extérieur -->
+  <circle cx="200" cy="200" r="155" fill="none" stroke="rgba(255,255,255,0.35)" stroke-width="1.5"/>
+
+  <!-- Lignes de latitude (ellipses horizontales) -->
+  <ellipse cx="200" cy="148" rx="120" ry="28" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/>
+  <ellipse cx="200" cy="110" rx="76"  ry="18" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.1"/>
+  <ellipse cx="200" cy="200" rx="155" ry="38" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/>
+  <ellipse cx="200" cy="252" rx="120" ry="28" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="1.2"/>
+  <ellipse cx="200" cy="292" rx="76"  ry="18" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="1.1"/>
+
+  <!-- Lignes de longitude (arcs verticaux simulés par des ellipses) -->
+  <ellipse cx="200" cy="200" rx="38"  ry="155" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="1.2"/>
+  <ellipse cx="200" cy="200" rx="88"  ry="155" fill="none" stroke="rgba(255,255,255,0.28)" stroke-width="1.2"/>
+  <ellipse cx="200" cy="200" rx="135" ry="155" fill="none" stroke="rgba(255,255,255,0.22)" stroke-width="1.1"/>
+  <line x1="200" y1="45" x2="200" y2="355" stroke="rgba(255,255,255,0.28)" stroke-width="1.2"/>
+
+  <!-- Texte "Productivité" -->
+  <text
+    x="200" y="218"
+    text-anchor="middle"
+    font-family="'Black Han Sans', 'Arial Black', 'Helvetica Neue', sans-serif"
+    font-size="52"
+    font-weight="900"
+    fill="#000000"
+    letter-spacing="-1"
+  >Productivité</text>
+
+  <!-- Texte "& IA Générative" -->
+  <text
+    x="200" y="272"
+    text-anchor="middle"
+    font-family="'Black Han Sans', 'Arial Black', 'Helvetica Neue', sans-serif"
+    font-size="46"
+    font-weight="900"
+    fill="#000000"
+    letter-spacing="-1"
+  >&amp; IA Générative</text>
+</svg>
