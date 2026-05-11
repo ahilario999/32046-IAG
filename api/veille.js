@@ -1,14 +1,14 @@
 // api/veille.js
 // Proxy RSS — veille IA générative en design graphique
-// Filtre : articles de moins de 14 jours
-// Images : on utilise TOUJOURS l'image Unsplash de la source (fiable, pas de hotlink)
-// Cache Vercel : 6h (s-maxage) pour fraîcheur tout en évitant la surcharge
+// Filtre : articles de la dernière semaine (7 jours)
+// Images : toujours l'image Unsplash thématique de la source (pas de hotlink)
+// Cache Vercel : 3h pour fraîcheur quotidienne
 
 // ─── Sources RSS — design graphique + IA ────────────────────────────────────
-// Priorité FR → EN. On scanne jusqu'à MAX_ARTICLES articles frais.
-// Les fallbackImage sont des photos Unsplash thématiques — toujours disponibles.
+// FR en premier, EN ensuite. 14 sources variées pour garantir 4 articles/semaine.
 const RSS_FEEDS = [
-  // ── Français — design + IA ──
+
+  // ── Français ──────────────────────────────────────────────────────────────
   {
     label: 'Créapills',
     url: 'https://www.creapills.com/feed/',
@@ -19,7 +19,18 @@ const RSS_FEEDS = [
     url: 'https://www.grapheine.com/feed/',
     fallbackImage: 'https://images.unsplash.com/photo-1588345921523-c2dcdb7f1dcd?w=600&q=80',
   },
-  // ── Anglais — design graphique & IA ──
+  {
+    label: 'Journal du Design',
+    url: 'https://www.journaldudesign.fr/feed/',
+    fallbackImage: 'https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=600&q=80',
+  },
+  {
+    label: 'Étapes',
+    url: 'https://etapes.com/feed/',
+    fallbackImage: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80',
+  },
+
+  // ── Anglais — design graphique & IA ───────────────────────────────────────
   {
     label: 'Eye on Design',
     url: 'https://eyeondesign.aiga.org/feed/',
@@ -36,22 +47,47 @@ const RSS_FEEDS = [
     fallbackImage: 'https://images.unsplash.com/photo-1558618047-f5e85e2d3e93?w=600&q=80',
   },
   {
+    label: 'Dezeen Design',
+    url: 'https://www.dezeen.com/design/feed/',
+    fallbackImage: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=80',
+  },
+  {
     label: 'Design Week',
     url: 'https://www.designweek.co.uk/feed/',
-    fallbackImage: 'https://images.unsplash.com/photo-1572044162444-ad60f128bdea?w=600&q=80',
+    fallbackImage: 'https://images.unsplash.com/photo-1523726491678-bf852e717f6a?w=600&q=80',
+  },
+  {
+    label: 'The Dieline',
+    url: 'https://thedieline.com/feed',
+    fallbackImage: 'https://images.unsplash.com/photo-1606206522056-01fe9f3ff7ee?w=600&q=80',
+  },
+  {
+    label: 'Brand New',
+    url: 'https://www.underconsideration.com/brandnew/feed/',
+    fallbackImage: 'https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80',
   },
   {
     label: 'Abduzeedo',
     url: 'https://abduzeedo.com/feed',
     fallbackImage: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&q=80',
   },
+  {
+    label: 'Smashing Magazine',
+    url: 'https://www.smashingmagazine.com/feed/',
+    fallbackImage: 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=600&q=80',
+  },
+  {
+    label: '99designs',
+    url: 'https://99designs.com/blog/feed/',
+    fallbackImage: 'https://images.unsplash.com/photo-1541462608143-67571c6738dd?w=600&q=80',
+  },
 ]
 
 // Nombre de cartes à afficher
 const MAX_ARTICLES = 4
 
-// Fraîcheur maximale des articles (en jours)
-const MAX_AGE_DAYS = 14
+// Dernière semaine
+const MAX_AGE_DAYS = 7
 
 // ─── Extraction du contenu d'un tag XML ─────────────────────────────────────
 function extractTag(xml, tag) {
@@ -62,8 +98,8 @@ function extractTag(xml, tag) {
 }
 
 // ─── Extraction du premier item récent (≤ MAX_AGE_DAYS) ─────────────────────
-// Note : on ne garde PAS l'image RSS — les sites bloquent le hotlinking.
-// On utilise toujours la fallbackImage Unsplash de la source.
+// Note : on ne récupère pas l'image RSS — hotlinking souvent bloqué.
+// L'image Unsplash de la source est toujours utilisée.
 function parseRecentItem(xml, maxDays = MAX_AGE_DAYS) {
   const cutoff = Date.now() - maxDays * 24 * 60 * 60 * 1000
   const itemRegex = /<item>([\s\S]*?)<\/item>/gi
@@ -76,7 +112,7 @@ function parseRecentItem(xml, maxDays = MAX_AGE_DAYS) {
 
     if (!title || !link) continue
 
-    // Filtre de date
+    // Filtre de date — si pas de date, on accepte (on ne peut pas vérifier)
     const rawDate =
       extractTag(item, 'pubDate')   ||
       extractTag(item, 'dc:date')   ||
@@ -86,8 +122,7 @@ function parseRecentItem(xml, maxDays = MAX_AGE_DAYS) {
     if (rawDate) {
       const pubDate = new Date(rawDate)
       if (!isNaN(pubDate.getTime()) && pubDate.getTime() < cutoff) {
-        console.log(`[Veille] Trop ancien (${pubDate.toDateString()}) — on passe`)
-        continue
+        continue // trop ancien, article suivant
       }
     }
 
@@ -104,8 +139,8 @@ export default async function handler(req, res) {
 
   if (req.method === 'OPTIONS') return res.status(200).end()
 
-  // Cache Vercel Edge : 6h + 12h stale-while-revalidate
-  res.setHeader('Cache-Control', 's-maxage=21600, stale-while-revalidate=43200')
+  // Cache 3h — fraîcheur quotidienne sans surcharger les sources
+  res.setHeader('Cache-Control', 's-maxage=10800, stale-while-revalidate=21600')
 
   const articles = []
 
@@ -134,7 +169,6 @@ export default async function handler(req, res) {
           title:  item.title,
           link:   item.link,
           source: source.label,
-          // Toujours l'image Unsplash — fiable, pas de hotlink, thématique
           image:  source.fallbackImage,
         })
         console.log(`[Veille] ✓ ${source.label} — "${item.title.substring(0, 50)}"`)
