@@ -62,12 +62,13 @@ export default function PrincipesWidget() {
             </svg>
           </div>
 
-          {/* Titre principal */}
+          {/* Titre principal — même typographie que .medias__title */}
           <div style={{
-            fontSize: 'var(--text-2xl)',
-            fontWeight: 700,
-            letterSpacing: '0.01em',
-            lineHeight: 1.05,
+            fontSize: '1.65rem',
+            fontWeight: 200,
+            textTransform: 'uppercase',
+            letterSpacing: '0.06em',
+            lineHeight: 1.1,
             color: 'var(--color-white)',
             marginBottom: '4px',
           }}>
