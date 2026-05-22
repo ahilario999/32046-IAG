@@ -5,7 +5,7 @@
 // Cache Vercel : 3h pour fraîcheur quotidienne
 
 // ─── Sources RSS — design graphique + IA ────────────────────────────────────
-// FR en premier, RGD Canada ensuite, puis EN. 15 sources variées.
+// FR en premier, puis EN. 17 sources variées pour garantir 4 articles/semaine.
 const RSS_FEEDS = [
 
   // ── Français ──────────────────────────────────────────────────────────────
@@ -30,15 +30,25 @@ const RSS_FEEDS = [
     fallbackImage: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80',
   },
 
-  // ── Canada — RGD (Association of Registered Graphic Designers) ────────────
-  // Source professionnelle canadienne — éthique, pratique, IA appliquée au design
+  // ── Anglais — design graphique, IA & critique professionnelle ─────────────
+  // Communication Arts — référence mondiale, critique IA, éthique, impact pro
   {
-    label: 'RGD Canada',
-    url: 'https://rgd.ca/articles.rss',
-    fallbackImage: 'https://images.unsplash.com/photo-1609921212029-bb5a28e60960?w=600&q=80',
+    label: 'Communication Arts',
+    url: 'https://commarts.com/feed',
+    fallbackImage: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80',
   },
-
-  // ── Anglais — design graphique & IA ───────────────────────────────────────
+  // Core77 — critique design depuis 1995, analyse approfondie, innovation
+  {
+    label: 'Core77',
+    url: 'https://core77.com/blog/rss.xml',
+    fallbackImage: 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=600&q=80',
+  },
+  // Figma Blog — IA appliquée au design collaboratif, tendances UX/produit
+  {
+    label: 'Figma Blog',
+    url: 'https://figma.com/blog/feed/atom.xml',
+    fallbackImage: 'https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=600&q=80',
+  },
   {
     label: 'Eye on Design',
     url: 'https://eyeondesign.aiga.org/feed/',
