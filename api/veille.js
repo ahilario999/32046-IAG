@@ -5,7 +5,7 @@
 // Cache Vercel : 3h pour fraîcheur quotidienne
 
 // ─── Sources RSS — design graphique + IA ────────────────────────────────────
-// FR en premier, EN ensuite. 14 sources variées pour garantir 4 articles/semaine.
+// FR en premier, RGD Canada ensuite, puis EN. 15 sources variées.
 const RSS_FEEDS = [
 
   // ── Français ──────────────────────────────────────────────────────────────
@@ -28,6 +28,14 @@ const RSS_FEEDS = [
     label: 'Étapes',
     url: 'https://etapes.com/feed/',
     fallbackImage: 'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80',
+  },
+
+  // ── Canada — RGD (Association of Registered Graphic Designers) ────────────
+  // Source professionnelle canadienne — éthique, pratique, IA appliquée au design
+  {
+    label: 'RGD Canada',
+    url: 'https://rgd.ca/articles.rss',
+    fallbackImage: 'https://images.unsplash.com/photo-1609921212029-bb5a28e60960?w=600&q=80',
   },
 
   // ── Anglais — design graphique & IA ───────────────────────────────────────
